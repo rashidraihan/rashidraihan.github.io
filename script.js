@@ -1,4 +1,4 @@
-// script.js updated
+/// === 🐾 Funny Animal GIFs ===/ script.js updated
 const gifs = [
   'https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif',
   'https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif',
@@ -12,9 +12,13 @@ const gifs = [
   'https://media.giphy.com/media/blPpTGDhn6hEI/giphy.gif'
    
 ];
+const fallback = gifs[0];
+const animalGif = document.getElementById('animalGif');
+animalGif.src = gifs[Math.floor(Math.random() * gifs.length)] || fallback;
 
-document.getElementById('animalGif').src = gifs[Math.floor(Math.random() * gifs.length)];
+// document.getElementById('animalGif').src = gifs[Math.floor(Math.random() * gifs.length)];
 
+// === 🌍 Greeting Animation ===
 const greetings = ['As-salamu Alaykum', 'السلام عليكم', 'Hey!','¡Hola!', 'Bonjour!', 'Ciao!', 'Hallo!', 'Olá!', 'こんにちは!', '안녕하세요!', '你好!', 'Привет!', 'नमस्ते!', 'שלום!', 'Здраво!', 'Γειά σου!', 'สวัสดี!', 'హలో!', 'Wassup!', 'مرحبًا!'];
 let greetIndex = 0;
 let charIndex = 0;
@@ -35,6 +39,7 @@ function typeGreeting() {
 }
 typeGreeting();
 
+// === 🌗 Theme Toggle ===
 function toggleTheme() {
   document.body.classList.toggle('dark');
   document.querySelectorAll('a.black').forEach(el => {
@@ -42,7 +47,7 @@ function toggleTheme() {
   });
 }
 
-// Randomly change letters on hover effect for navigation links
+// === 🧠 Matrix Hover Text Glitch ===// Randomly change letters on hover effect for navigation links
 const letters = "10101010101010101010101010101010101010101010101010101010101010101010";
 
 document.querySelectorAll(".nav").forEach(el => {
