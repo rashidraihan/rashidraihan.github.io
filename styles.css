@@ -12,15 +12,14 @@ body {
   background-color: var(--light-bg);
   color: var(--light-text);
   transition: background-color 0.3s, color 0.3s;
-  overflow: hidden; /* prevent scroll */
-  height: 100vh; /* fit full screen */
+  overflow-x: hidden;
 }
 
 .wrapper {
   display: flex;
   max-width: 1000px;
   margin: auto;
-  height: 100vh; /* fit screen */
+  height: 100vh;
   overflow: hidden;
 }
 
@@ -48,7 +47,6 @@ body {
   object-fit: cover;
 }
 
-/* ///// */
 h1 {
   font-size: 1.8rem;
   margin: 0.5rem 0 0.2rem;
@@ -80,10 +78,6 @@ h1 {
   text-align: left;
   padding-left: 1rem;
 }
-/* .links .nav:hover {
-  background-color: #f0f0f0;
-  text-decoration: underline;
-} */
 
 .links .nav:hover {
   background-color: #eeeeee;
@@ -97,7 +91,7 @@ h1 {
 }
 
 #greeting {
-  min-height: 2.5rem; /* Prevent vertical jump */
+  min-height: 2.5rem;
   font-size: 1.7rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
@@ -105,7 +99,7 @@ h1 {
   white-space: nowrap;
   overflow: hidden;
   display: inline-block;
-  height: 2.2rem; /* ✅ Fixes jump by reserving space */
+  height: 2.2rem;
 }
 
 .underline {
@@ -163,21 +157,23 @@ h1 {
 
 .theme-toggle {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 1rem;
+  right: 1rem;
   cursor: pointer;
   padding: 0.5rem;
   font-size: 1.2rem;
+  z-index: 10;
 }
 
 footer {
   text-align: center;
-  padding: 1rem;
+  padding: 1rem 0;
   font-size: 0.9rem;
   opacity: 0.6;
   width: 100%;
-  position: absolute;
-  bottom: 0;
+  position: relative;
+  margin-top: 2rem;
+  color: #666;
 }
 
 body.dark {
@@ -208,76 +204,54 @@ body.dark a.black {
   }
 }
 
-
-
-/* Responsive Styles */
 @media (max-width: 768px) {
   .wrapper {
     flex-direction: column;
-    align-items: center;
     padding: 1rem;
+    height: auto;
   }
 
   .sidebar {
     width: 100%;
-    align-items: center;
-    text-align: center;
+    padding: 1rem 0;
   }
 
   .animal-box {
-    margin-bottom: 1rem;
+    margin: 0 auto 1rem;
   }
 
-  .icons {
-    justify-content: center;
-    margin-top: 0.5rem;
+  h1, .sub, .icons {
+    text-align: center;
   }
 
-  .links {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .nav {
-    width: 80%;
+  #greeting {
     text-align: left;
+    margin-top: 1rem;
   }
 
   .main {
     width: 100%;
     padding: 1rem;
-    text-align: center;
   }
 
-  #greeting {
-    text-align: center;
-    margin-bottom: 1rem;
+  .links {
+    flex-direction: column;
+    margin-top: 2rem;
+    align-items: flex-start;
+    padding-left: 1rem;
   }
 
-  .theme-toggle {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    z-index: 10;
+  .links .nav {
+    width: 90%;
+    text-align: left;
   }
 
   .project-box {
-    text-align: left;
-    margin: 1rem auto;
-    width: 90%;
+    width: 95%;
+    margin: 2rem auto;
   }
 
-footer {
-  position: relative; /* 🟢 Not fixed or absolute */
-  text-align: center;
-  margin-top: 2rem;
-  padding: 1rem 0;
-  font-size: 0.9rem;
-  color: #666;
+  footer {
+    margin-top: 2rem;
+  }
 }
-}
-
-/*  */
-
