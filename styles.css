@@ -269,12 +269,14 @@ body.dark a.black {
     width: 90%;
   }
 
-  footer {
-    text-align: center;
-    padding: 1rem;
-    font-size: 0.9rem;
-    opacity: 0.6;
-  }
+footer {
+  position: relative; /* 🟢 Not fixed or absolute */
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+  color: #666;
+}
 }
 
 /*  */
