@@ -453,3 +453,144 @@ document.querySelectorAll(".nav").forEach(el => {
 
 //   resetLogo();
 // }
+
+///js 2/////
+
+// === 🐾 Funny Animal GIFs ===
+const gifs = [
+  'https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif',
+  'https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif',
+  'https://media.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif',
+  'https://media.giphy.com/media/13borq7Zo2kulO/giphy.gif',
+  'https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif',
+  'https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif',
+  'https://media.giphy.com/media/6VoDJzfRjJNbG/giphy.gif',
+  'https://media.giphy.com/media/GyJ8p0Um850ic/giphy.gif',
+  'https://media.giphy.com/media/cuPm4p4pClZVC/giphy.gif',
+  'https://media.giphy.com/media/blPpTGDhn6hEI/giphy.gif'
+
+];
+const fallback = gifs[0];
+const animalGif = document.getElementById('animalGif');
+animalGif.src = gifs[Math.floor(Math.random() * gifs.length)] || fallback;
+
+// === 🌤️ Dynamic Time-Based Greetings (No Emoji) ===
+const greetingPairs = {
+  morning: [
+    ['Good morning', 'Hello'],
+    ['¡Buenos días', '¡Hola'],
+    ['Bonjour', 'Bonjour'],
+    ['صباح الخير', 'السلام عليكم'],
+    ['おはようございます', 'こんにちは'],
+    ['সুপ্রভাত', 'হ্যালো'],
+    ['Buongiorno', 'Ciao'],
+    ['Доброе утро', 'Привет'],
+    ['좋은 아침입니다', '안녕하세요'],
+    ['Bom dia', 'Olá'],
+    ['Καλημέρα', 'Γειά σου']
+  ],
+  afternoon: [
+    ['Good afternoon', 'Hello'],
+    ['¡Buenas tardes', '¡Hola'],
+    ['Bon après-midi', 'Bonjour'],
+    ['مساء الخير', 'السلام عليكم'],
+    ['こんにちは', 'こんにちは'],
+    ['শুভ অপরাহ্ন', 'হ্যালো'],
+    ['Buon pomeriggio', 'Ciao'],
+    ['Добрый день', 'Привет'],
+    ['안녕하세요', '안녕하세요'],
+    ['Boa tarde', 'Olá'],
+    ['Καλό απόγευμα', 'Γειά σου']
+  ],
+  evening: [
+    ['Good evening', 'Hello'],
+    ['¡Buenas noches', '¡Hola'],
+    ['Bonsoir', 'Salut'],
+    ['مساء النور', 'السلام عليكم'],
+    ['こんばんは', 'こんにちは'],
+    ['শুভ সন্ধ্যা', 'হ্যালো'],
+    ['Buona sera', 'Ciao'],
+    ['Добрый вечер', 'Привет'],
+    ['안녕하십니까', '안녕하세요'],
+    ['Boa noite', 'Olá'],
+    ['Καλησπέρα', 'Γειά σου']
+  ],
+  night: [
+    ['Good night', 'Hello'],
+    ['Buenas noches', '¡Hola'],
+    ['Bonne nuit', 'Bonsoir'],
+    ['শুভ রাত্রি', 'হ্যালো'],
+    ['おやすみなさい', 'こんばんは'],
+    ['شب بخیر', 'السلام عليكم'],
+    ['Buona notte', 'Ciao'],
+    ['Доброй ночи', 'Привет'],
+    ['안녕히 주무세요', '안녕하세요'],
+    ['Boa noite', 'Olá'],
+    ['Καληνύχτα', 'Γειά σου']
+  ]
+};
+
+function getGreetingByTime() {
+  const hour = new Date().getHours();
+  let period;
+  if (hour >= 5 && hour < 11) {
+    period = 'morning';
+  } else if (hour >= 11 && hour < 16) {
+    period = 'afternoon';
+  } else if (hour >= 16 && hour < 21) {
+    period = 'evening';
+  } else {
+    period = 'night';
+  }
+
+  const phrases = greetingPhrases[period] || greetingPhrases['evening'];
+  return phrases[Math.floor(Math.random() * phrases.length)];
+}
+
+// === ⌨️ Typewriter Animation for Dynamic Greeting ===
+const greetingEl = document.getElementById('greeting');
+let fullGreeting = getGreetingByTime();
+let charIndex = 0;
+
+function typeGreeting() {
+  if (charIndex < fullGreeting.length) {
+    greetingEl.textContent = fullGreeting.slice(0, charIndex + 1);
+    charIndex++;
+    setTimeout(typeGreeting, 60);
+  } else {
+    setTimeout(() => {
+      charIndex = 0;
+      fullGreeting = getGreetingByTime();
+      typeGreeting();
+    }, 2500);
+  }
+}
+typeGreeting();
+
+// === 🌗 Theme Toggle ===
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+  document.querySelectorAll('a.black').forEach(el => {
+    el.style.color = document.body.classList.contains('dark') ? 'white' : 'black';
+  });
+}
+// === 🧠 Matrix Hover Text Glitch ===
+const letters = "10101010101010101010101010101010101010101010101010101010101010101010";
+document.querySelectorAll(".nav").forEach(el => {
+  el.addEventListener("mouseover", () => {
+    let iteration = 0;
+    const originalText = el.dataset.value;
+
+    const interval = setInterval(() => {
+      el.innerText = originalText
+        .split("")
+        .map((_, i) => {
+          return i < iteration ? originalText[i] : letters[Math.floor(Math.random() * letters.length)];
+        })
+        .join("");
+
+      if (iteration >= originalText.length) clearInterval(interval);
+      iteration += 0.5;
+    }, 30);
+  });
+});
