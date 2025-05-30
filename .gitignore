@@ -1,0 +1,3 @@
+# .gitignore
+assets/extras/secret-info.txt
+assets/private/
