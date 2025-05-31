@@ -19,7 +19,7 @@ animalGif.src = gifs[Math.floor(Math.random() * gifs.length)] || fallback;
 // document.getElementById('animalGif').src = gifs[Math.floor(Math.random() * gifs.length)];
 
 // === 🌍 Greeting Animation ===
-const greetings = ['As-salamu Alaykum', 'السلام عليكم', 'Hey!','¡Hola!', 'Bonjour!', 'Ciao!', 'Hallo!', 'Olá!', 'こんにちは!', '안녕하세요!', '你好!', 'Привет!', 'नमस्ते!', 'שלום!', 'Здраво!', 'Γειά σου!', 'สวัสดี!', 'హలో!', 'Wassup!', 'مرحبًا!'];
+const greetings = ['As-salamu Alaykum', 'السلام عليكم', 'Hey!','¡Hola!', 'Bonjour!', 'Ciao!', 'Hallo!', 'Olá!', 'こんにちは!', '안녕하세요!', '你好!', 'Привет!', 'Здраво!', 'Γειά σου!', 'สวัสดี!', 'హలో!', 'Wassup!', 'مرحبًا!'];
 let greetIndex = 0;
 let charIndex = 0;
 const greetingEl = document.getElementById('greeting');
