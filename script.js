@@ -1,34 +1,15 @@
-/// === 🐾 Funny Animal GIFs ===/ script.js updated
-const gifs = [
-  'https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif',
-  'https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif',
-  'https://media.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif',
-  'https://media.giphy.com/media/13borq7Zo2kulO/giphy.gif',
-  'https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif',
-  'https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif',
-  'https://media.giphy.com/media/6VoDJzfRjJNbG/giphy.gif',
-  'https://media.giphy.com/media/GyJ8p0Um850ic/giphy.gif',
-  'https://media.giphy.com/media/cuPm4p4pClZVC/giphy.gif',
-  'https://media.giphy.com/media/blPpTGDhn6hEI/giphy.gif'
-   
-];
-const fallback = gifs[0];
-const animalGif = document.getElementById('animalGif');
-animalGif.src = gifs[Math.floor(Math.random() * gifs.length)] || fallback;
-
-// document.getElementById('animalGif').src = gifs[Math.floor(Math.random() * gifs.length)];
-
 // === 🌍 Greeting Animation ===
-const greetings = ['As-salamu Alaykum', 'السلام عليكم', 'Hey!','¡Hola!', 'Bonjour!', 'Ciao!', 'Hallo!', 'Olá!', 'こんにちは!', '안녕하세요!', '你好!', 'Привет!', 'Здраво!', 'Γειά σου!', 'สวัสดี!', 'హలో!', 'Wassup!', 'مرحبًا!'];
+const greetings = ['As-salamu Alaykum', 'السلام عليكم', 'আসসালামু আলাইকুম', 'Hey!','¡Hola!', 'Bonjour!', 'Ciao!', 'Hallo!', 'Olá!', 'こんにちは!', '안녕하세요!', '你好!', 'Привет!', 'Здраво!', 'Γειά σου!', 'สวัสดี!', 'హలో!', 'Wassup!', 'مرحبًا!'];
 let greetIndex = 0;
 let charIndex = 0;
 const greetingEl = document.getElementById('greeting');
+
 function typeGreeting() {
-  if (charIndex < greetings[greetIndex].length) {
+  if (greetingEl && charIndex < greetings[greetIndex].length) {
     greetingEl.textContent += greetings[greetIndex][charIndex];
     charIndex++;
     setTimeout(typeGreeting, 60);
-  } else {
+  } else if (greetingEl) {
     setTimeout(() => {
       greetingEl.textContent = '';
       charIndex = 0;
@@ -37,20 +18,34 @@ function typeGreeting() {
     }, 1600);
   }
 }
-typeGreeting();
 
 // === 🌗 Theme Toggle ===
 function toggleTheme() {
   document.body.classList.toggle('dark');
-  document.querySelectorAll('a.black').forEach(el => {
-    el.style.color = document.body.classList.contains('dark') ? 'white' : 'black';
+  
+  // Update stars visibility based on theme
+  const stars = document.querySelectorAll('.star');
+  stars.forEach(star => {
+    if (document.body.classList.contains('dark')) {
+      star.style.opacity = '0.3';
+    } else {
+      star.style.opacity = '0';
+    }
   });
+  
+  // Save theme preference
+  localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
 }
 
-// === 🧠 Matrix Hover Text Glitch ===// Randomly change letters on hover effect for navigation links
+// Check for saved theme preference
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark');
+}
+
+// === 🧠 Matrix Hover Text Glitch ===
 const letters = "10101010101010101010101010101010101010101010101010101010101010101010";
 
-document.querySelectorAll(".nav").forEach(el => {
+document.querySelectorAll(".nav-link").forEach(el => {
   el.addEventListener("mouseover", () => {
     let iteration = 0;
     const originalText = el.dataset.value;
@@ -67,7 +62,55 @@ document.querySelectorAll(".nav").forEach(el => {
       iteration += 1 / 2;
     }, 30);
   });
+  
+  el.addEventListener("mouseout", () => {
+    el.innerText = el.dataset.value;
+  });
 });
 
+// === Create starry background ===
+function createStars() {
+  const spaceBg = document.getElementById('spaceBg');
+  if (spaceBg) {
+    const starCount = 100;
+    
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      
+      // Random position
+      const posX = Math.random() * 100;
+      const posY = Math.random() * 100;
+      
+      // Random size
+      const size = Math.random() * 3;
+      
+      // Random animation delay
+      const delay = Math.random() * 5;
+      
+      star.style.left = `${posX}%`;
+      star.style.top = `${posY}%`;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.animationDelay = `${delay}s`;
+      
+      spaceBg.appendChild(star);
+    }
+    
+    // Update stars visibility based on current theme
+    const stars = document.querySelectorAll('.star');
+    stars.forEach(star => {
+      if (document.body.classList.contains('dark')) {
+        star.style.opacity = '0.3';
+      } else {
+        star.style.opacity = '0';
+      }
+    });
+  }
+}
 
-
+// Initialize everything when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+  typeGreeting();
+  createStars();
+});
