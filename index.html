@@ -14,47 +14,79 @@
   <div class="container">
     <header>
       <div class="header-content">
-        <div class="profile-image">
+        <div class="profile-image" onclick="goToHome()">
           <img src="wraihan.png" alt="Raihan Rashid">
         </div>
         <div class="name-title">
-          <h1>Raihan Rashid</h1>
-          <p>wraihan.exe</p>
+          <!-- <h1>Raihan Rashid</h1>
+          <p>wraihan.exe</p> -->
         </div>
       </div>
-      <div class="theme-toggle" onclick="toggleTheme()">
-        <i class="fas fa-adjust"></i>
+      
+      <div class="header-right">
+        <nav class="desktop-nav">
+          <a href="column.html" class="nav-link" data-value="Column">Column</a>
+          <a href="experiments.html" class="nav-link" data-value="Experiments">Experiments</a>
+        </nav>
+        
+        <div class="header-controls">
+          <div class="social-links-header">
+            <a href="https://x.com/Obsraihan" target="_blank" class="social-link"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://github.com/rashidraihan" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/rashidraihan021/" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+            <a href="https://kaggle.com/raihanrashid021" target="_blank" class="social-link"><i class="fab fa-kaggle"></i></a>
+          </div>
+          
+          <div class="theme-toggle" onclick="toggleTheme()">
+            <i class="fas fa-adjust"></i>
+          </div>
+          
+          <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+          </div>
+        </div>
       </div>
     </header>
+
+    <div class="mobile-nav" id="mobileNav">
+      <div class="mobile-nav-content">
+        <a href="column.html" class="nav-link" data-value="Column">Column</a>
+        <a href="experiments.html" class="nav-link" data-value="Experiments">Experiments</a>
+        
+        <div class="mobile-nav-footer">
+          <a href="https://x.com/Obsraihan" target="_blank" class="cartoon-icon"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://github.com/rashidraihan" target="_blank" class="cartoon-icon"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/rashidraihan021/" target="_blank" class="cartoon-icon"><i class="fab fa-linkedin"></i></a>
+          <a href="https://kaggle.com/raihanrashid021" target="_blank" class="cartoon-icon"><i class="fab fa-kaggle"></i></a>
+        </div>
+      </div>
+    </div>
 
     <main>
       <div class="greeting" id="greeting"></div>
       
       <div class="intro">
-        <p>I'm Raihan — a 23-year-old CSE student at North South University, Dhaka.</p>
-        <p>Outside the <a href="https://github.com/rashidraihan" target="_blank">terminal</a>, I explore <a href="https://letterboxd.com/Wraihentine/" target="_blank">cinematic</a> universes and tinker with ideas just to see what clicks.</p>
-        <p>Curious to know more?</p>
-        <p>Check out my <a href="resume.pdf" target="_blank">resume</a>, email me at <i>rashidraihan021 [at] gmail [dot] com</i> or ping me on <a href="https://x.com/Obsraihan" target="_blank">X</a>.</p>
-      </div>
-      
-      <div class="nav-container">
-        <div class="nav-links">
-          <a href="#" class="nav-link" data-value="Column">Column</a>
-          <a href="experiments.html" class="nav-link" data-value="Experiments">Experiments</a>
-        </div>
-      </div>
-      
-      <div class="social-links">
-        <a href="https://x.com/Obsraihan" target="_blank" class="social-link"><i class="fab fa-x-twitter"></i></a>
-        <a href="https://github.com/rashidraihan" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
-        <a href="https://kaggle.com/raihanrashid021" target="_blank" class="social-link"><i class="fab fa-kaggle"></i></a>
+        <p>I'm Raihan Rashid.</p>
+        <p>Computer Science graduate from North South University, Dhaka.</p>
+        <p>I code, I create, I break things, and I stumble step by step while walking.</p>
+        <p>I explore <a href="https://letterboxd.com/Wraihentine/" target="_blank">cinematic universes</a>, games, sports, and more.</p>
+        <p>Want to know more?</p> 
+        <p>See my <a href="resume.pdf">resume</a> or email me at <i>(rashidraihan021 [at] gmail [dot] com)</i>.</p>
       </div>
     </main>
   </div>
 
-  <footer>&copy; Raihan Rashid 2025</footer>
+  <footer>
+    <div class="social-links-footer">
+      <a href="https://x.com/Obsraihan" target="_blank" class="cartoon-icon"><i class="fab fa-x-twitter"></i></a>
+      <a href="https://github.com/rashidraihan" target="_blank" class="cartoon-icon"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/rashidraihan021/" target="_blank" class="cartoon-icon"><i class="fab fa-linkedin"></i></a>
+      <a href="https://kaggle.com/raihanrashid021" target="_blank" class="cartoon-icon"><i class="fab fa-kaggle"></i></a>
+    </div>
+    <p>&copy; Raihan Rashid 2025</p>
+  </footer>
 
-  <!-- Add this line to load your JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
