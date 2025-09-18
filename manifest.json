@@ -1,0 +1,23 @@
+{
+  "name": "Raihan Rashid Portfolio",
+  "short_name": "RaihanPortfolio",
+  "description": "Computer Science graduate portfolio showcasing projects and blog",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f9fa",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "wraihan.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "wraihan.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["education", "technology", "portfolio"]
+}

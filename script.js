@@ -259,3 +259,59 @@ document.addEventListener('DOMContentLoaded', function() {
     img.style.cursor = 'pointer';
   });
 });
+
+// Register Service Worker for offline functionality
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js')
+      .then(function(registration) {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      })
+      .catch(function(error) {
+        console.log('ServiceWorker registration failed: ', error);
+      });
+  });
+}
+
+// Check if page is loaded offline
+window.addEventListener('load', function() {
+  if (!navigator.onLine) {
+    showOfflineNotification();
+  }
+});
+
+// Listen for online/offline status
+window.addEventListener('online', function() {
+  hideOfflineNotification();
+});
+
+window.addEventListener('offline', function() {
+  showOfflineNotification();
+});
+
+function showOfflineNotification() {
+  // Create offline indicator
+  const offlineIndicator = document.createElement('div');
+  offlineIndicator.id = 'offline-indicator';
+  offlineIndicator.innerHTML = '⚠️ You are currently offline. Showing cached version.';
+  offlineIndicator.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #ff9800;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    z-index: 10000;
+    font-size: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  `;
+  document.body.appendChild(offlineIndicator);
+}
+
+function hideOfflineNotification() {
+  const offlineIndicator = document.getElementById('offline-indicator');
+  if (offlineIndicator) {
+    offlineIndicator.remove();
+  }
+}
