@@ -16,11 +16,26 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Raihan Portfolio">
-  <link rel="apple-touch-icon" href="images/wraihan.png">
+  <link rel="apple-touch-icon" href="/images/wraihan.png">
 
-  <!-- Preload important resources -->
-  <link rel="preload" href="/styles.css" as="style">
-  <link rel="preload" href="/script.js" as="script">
+  <!-- PWA support -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Raihan Portfolio">
+<link rel="apple-touch-icon" href="/images/wraihan.png">
+
+<!-- For Chrome Mobile -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#2563eb">
+
+<!-- For Windows -->
+<meta name="msapplication-TileImage" content="/images/wraihan.png">
+<meta name="msapplication-TileColor" content="#2563eb">
+<meta name="msapplication-config" content="/browserconfig.xml">
+
+<!-- Preload important resources -->
+<link rel="preload" href="/styles.css" as="style" crossorigin>
+<link rel="preload" href="/script.js" as="script" crossorigin>
 </head>
 <body>
   <div class="space-bg" id="spaceBg"></div>

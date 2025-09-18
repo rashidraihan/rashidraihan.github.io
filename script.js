@@ -260,34 +260,58 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// ===== OFFLINE FUNCTIONALITY =====
+// ===== ENHANCED OFFLINE FUNCTIONALITY =====
 
-// Register Service Worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
+// Register Service Worker with better error handling
+function registerServiceWorker() {
+  if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js')
       .then(function(registration) {
         console.log('SW registered: ', registration);
+        
+        // Check for updates every hour
+        setInterval(() => {
+          registration.update();
+        }, 60 * 60 * 1000);
       })
       .catch(function(registrationError) {
         console.log('SW registration failed: ', registrationError);
       });
-  });
+  }
 }
 
-// Offline/Online detection
+// Enhanced offline/online detection
+let isOnline = true;
+const onlineStatusListeners = [];
+
 function updateOnlineStatus() {
-  const isOnline = navigator.onLine;
-  if (!isOnline) {
-    showOfflineIndicator();
-  } else {
-    hideOfflineIndicator();
+  const newStatus = navigator.onLine;
+  
+  if (newStatus !== isOnline) {
+    isOnline = newStatus;
+    
+    if (isOnline) {
+      hideOfflineIndicator();
+      console.log('Online - connection restored');
+      
+      // Refresh the page if it was previously offline
+      if (sessionStorage.getItem('wasOffline') === 'true') {
+        sessionStorage.removeItem('wasOffline');
+        window.location.reload();
+      }
+    } else {
+      showOfflineIndicator();
+      sessionStorage.setItem('wasOffline', 'true');
+      console.log('Offline - using cached content');
+    }
+    
+    // Notify all listeners
+    onlineStatusListeners.forEach(listener => listener(isOnline));
   }
 }
 
 function showOfflineIndicator() {
-  // Remove existing indicator if any
-  hideOfflineIndicator();
+  hideOfflineIndicator(); // Remove existing first
   
   const indicator = document.createElement('div');
   indicator.id = 'offline-indicator';
@@ -304,17 +328,8 @@ function showOfflineIndicator() {
     font-size: 14px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     animation: slideIn 0.3s ease;
+    font-family: 'Inter', sans-serif;
   `;
-  
-  // Add styles for animation
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes slideIn {
-      from { transform: translateX(100px); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-  `;
-  document.head.appendChild(style);
   
   document.body.appendChild(indicator);
 }
@@ -326,58 +341,86 @@ function hideOfflineIndicator() {
   }
 }
 
+// Enhanced resume availability check
+function checkResumeAvailability() {
+  const resumeLinks = document.querySelectorAll('a[href*="resume.pdf"]');
+  
+  if (!navigator.onLine) {
+    // Check if resume is cached
+    caches.match('/resume.pdf')
+      .then(response => {
+        if (!response) {
+          // Add offline handler to resume links
+          resumeLinks.forEach(link => {
+            const originalClick = link.onclick;
+            
+            link.onclick = function(e) {
+              if (!navigator.onLine) {
+                e.preventDefault();
+                alert('Resume not available offline. Please connect to the internet to download it.');
+                return false;
+              }
+              
+              if (originalClick) {
+                return originalClick.call(this, e);
+              }
+            };
+            
+            // Visual indication that resume is offline
+            link.style.opacity = '0.7';
+            link.title = 'Connect to internet to download';
+          });
+        }
+      });
+  } else {
+    // Restore normal behavior when online
+    resumeLinks.forEach(link => {
+      link.style.opacity = '';
+      link.title = '';
+    });
+  }
+}
+
 // Listen for online/offline events
 window.addEventListener('online', updateOnlineStatus);
 window.addEventListener('offline', updateOnlineStatus);
 
-// Initial check
-updateOnlineStatus();
-
-// Modify your existing DOMContentLoaded event
+// Initial setup
 document.addEventListener('DOMContentLoaded', function() {
+  // Your existing functions
   typeGreeting();
   createStars();
   highlightCurrentPage();
   handleContactForm();
-  updateOnlineStatus(); // Check status on load
   
-  // Add cursor pointer to profile images for better UX
+  // Enhanced offline functionality
+  registerServiceWorker();
+  updateOnlineStatus();
+  checkResumeAvailability();
+  
+  // Periodically check resume availability (every 30 seconds)
+  setInterval(checkResumeAvailability, 30000);
+  
+  // Add cursor pointer to profile images
   document.querySelectorAll('.profile-image').forEach(img => {
     img.style.cursor = 'pointer';
   });
 });
 
-// Add to your existing script.js
-function checkResumeAvailability() {
-  // Check if resume is available in cache
-  if (!navigator.onLine) {
-    caches.match('/doc/rashid+raihan+resume.pdf')
-      .then(response => {
-        if (!response) {
-          // Show a message if resume isn't cached
-          const resumeLinks = document.querySelectorAll('a[href*="/doc/rashid+raihan+resume.pdf"]');
-          resumeLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-              if (!navigator.onLine) {
-                e.preventDefault();
-                alert('Resume not available offline. Please connect to the internet to download it.');
-              }
-            });
-          });
-        }
-      });
-  }
+// Add online status listener capability
+function addOnlineStatusListener(callback) {
+  onlineStatusListeners.push(callback);
+  callback(isOnline); // Call immediately with current status
 }
 
-// Call this function when the page loads
-document.addEventListener('DOMContentLoaded', function() {
-  // Your existing code...
-  checkResumeAvailability();
-});
-
-// Service Worker update check
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.ready.then(registration => {
-    registration.update();
+// Debug function to check what's cached
+function checkCache() {
+  caches.open(CACHE_NAME).then(cache => {
+    cache.keys().then(keys => {
+      console.log('Cached resources:', keys.map(key => key.url));
+    });
   });
 }
+
+// Run this in browser console to see what's cached
+window.checkCache = checkCache;
