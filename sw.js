@@ -1,81 +1,119 @@
-const CACHE_NAME = 'raihan-portfolio-v4';
+const CACHE_NAME = 'raihan-portfolio-mobile-v2';
 const OFFLINE_URL = '/offline.html';
 const RESUME_URL = '/doc/rashid+raihan+resume.pdf';
 
-// Files to cache
+// Files to cache - include ALL pages
 const urlsToCache = [
   '/',
   '/index.html',
+  '/column.html', 
+  '/experiments.html',
   '/styles.css',
   '/script.js',
   '/offline.html',
   '/wraihan.png',
   '/tabphoto.ico',
-  '/column.html',
-  '/experiments.html',
-  RESUME_URL
+  RESUME_URL  // Using the resume path
 ];
 
-// Install event
+// Install event - optimized for mobile
 self.addEventListener('install', (event) => {
-  console.log('Service Worker installing.');
+  console.log('Service Worker installing for mobile.');
   
-  // Force the waiting service worker to become the active service worker
+  // Force activation immediately
   self.skipWaiting();
   
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('Cache opened');
+        console.log('Mobile cache opened');
         
-        // Add each URL individually with error handling
-        return Promise.all(
+        // Use Promise.allSettled to handle failures gracefully
+        return Promise.allSettled(
           urlsToCache.map((url) => {
-            return cache.add(url).catch((error) => {
-              console.log(`Failed to cache ${url}:`, error);
-            });
+            return fetch(url, { cache: 'no-cache' })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(`Failed to fetch ${url}: ${response.status}`);
+                }
+                return cache.put(url, response);
+              })
+              .catch((error) => {
+                console.warn(`Could not cache ${url}:`, error);
+                return Promise.resolve(); // Don't fail the entire install
+              });
           })
         );
-      })
-      .then(() => {
-        console.log('All resources cached successfully');
       })
   );
 });
 
-// Activate event
+// Activate event - aggressive cleanup for mobile
 self.addEventListener('activate', (event) => {
-  console.log('Service Worker activating.');
+  console.log('Service Worker activating for mobile.');
   
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
+          // Delete any old caches (mobile devices have limited storage)
           if (cacheName !== CACHE_NAME) {
-            console.log('Deleting old cache:', cacheName);
+            console.log('Deleting old mobile cache:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
     })
-    // Take control of all clients immediately
+    // Take immediate control (critical for mobile)
     .then(() => self.clients.claim())
   );
 });
 
-// Fetch event - simplified for cross-browser compatibility
+// Fetch event - mobile optimized
 self.addEventListener('fetch', (event) => {
-  // Only handle requests from the same origin
-  const url = new URL(event.request.url);
-  if (url.origin !== location.origin) {
+  // Skip non-GET requests and cross-origin requests
+  if (event.request.method !== 'GET' || !event.request.url.startsWith(self.location.origin)) {
     return;
   }
   
-  // For non-GET requests, use the network only
-  if (event.request.method !== 'GET') {
+  // Special handling for PDF files (including your resume)
+  if (event.request.url.includes('.pdf')) {
+    event.respondWith(
+      caches.match(event.request)
+        .then((response) => {
+          // Return cached PDF if available
+          if (response) {
+            return response;
+          }
+          
+          // Otherwise, try to fetch from network
+          return fetch(event.request)
+            .then((fetchResponse) => {
+              // Cache the PDF for future offline use
+              const responseClone = fetchResponse.clone();
+              caches.open(CACHE_NAME)
+                .then((cache) => {
+                  cache.put(event.request, responseClone);
+                });
+              return fetchResponse;
+            })
+            .catch((error) => {
+              console.log('PDF fetch failed:', error);
+              return new Response(
+                'Resume not available offline. Please connect to the internet to download it.',
+                { 
+                  status: 408,
+                  statusText: 'Offline',
+                  headers: new Headers({ 'Content-Type': 'text/plain' })
+                }
+              );
+            });
+        })
+    );
     return;
   }
   
+  // For all other requests
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
@@ -84,7 +122,7 @@ self.addEventListener('fetch', (event) => {
           return response;
         }
         
-        // Otherwise, get from network
+        // For mobile, try to cache as we go
         return fetch(event.request)
           .then((response) => {
             // Don't cache if not a valid response
@@ -92,36 +130,38 @@ self.addEventListener('fetch', (event) => {
               return response;
             }
             
-            // Clone the response
+            // Clone the response for caching
             const responseToCache = response.clone();
             
             caches.open(CACHE_NAME)
               .then((cache) => {
                 cache.put(event.request, responseToCache);
+              })
+              .catch((error) => {
+                console.warn('Could not cache response:', error);
               });
             
             return response;
           })
           .catch((error) => {
-            console.log('Fetch failed; returning offline page instead.', error);
+            console.log('Fetch failed on mobile:', error);
             
-            // If the request is for a page, return the offline page
-            if (event.request.headers.get('accept').includes('text/html')) {
+            // Special handling for HTML pages on mobile
+            if (event.request.destination === 'document' || 
+                event.request.headers.get('accept').includes('text/html')) {
               return caches.match(OFFLINE_URL);
             }
             
-            // For PDF requests, provide a helpful error
-            if (event.request.url.includes('.pdf')) {
-              return new Response(
-                'PDF not available offline. Please connect to the internet to access this resource.',
-                { 
-                  status: 408,
-                  statusText: 'Offline',
-                  headers: new Headers({ 'Content-Type': 'text/plain' })
-                }
-              );
-            }
+            // For other resources, return a generic error
+            return Response.error();
           });
       })
   );
+});
+
+// Message event handler for mobile
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
