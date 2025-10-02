@@ -1,6 +1,5 @@
 const CACHE_NAME = 'raihan-portfolio-mobile-v2';
 const OFFLINE_URL = '/offline.html';
-const RESUME_URL = '/doc/rashid+raihan+resume.pdf';
 
 // Files to cache - include ALL pages
 const urlsToCache = [
@@ -13,7 +12,7 @@ const urlsToCache = [
   '/offline.html',
   '/wraihan.png',
   '/tabphoto.ico',
-  RESUME_URL  // Using the resume path
+  '/doc/rashid+raihan+resume.pdf'
 ];
 
 // Install event - optimized for mobile
