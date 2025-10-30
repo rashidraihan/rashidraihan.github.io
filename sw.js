@@ -1,4 +1,4 @@
-const CACHE_NAME = 'raihan-portfolio-mobile-v2';
+const CACHE_NAME = 'raihan-portfolio-v3.0';
 const OFFLINE_URL = '/offline.html';
 
 // Files to cache - include ALL pages
@@ -10,61 +10,54 @@ const urlsToCache = [
   '/styles.css',
   '/script.js',
   '/offline.html',
-  '/wraihan.png',
+  '/images/wraihan.png',
   '/tabphoto.ico',
   '/doc/rashid+raihan+resume.pdf'
 ];
 
 // Install event - optimized for mobile
 self.addEventListener('install', (event) => {
-  console.log('Service Worker installing for mobile.');
+  console.log('Service Worker installing v3.0');
   
   // Force activation immediately
   self.skipWaiting();
   
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('Mobile cache opened');
-        
-        // Use Promise.allSettled to handle failures gracefully
-        return Promise.allSettled(
-          urlsToCache.map((url) => {
-            return fetch(url, { cache: 'no-cache' })
-              .then((response) => {
-                if (!response.ok) {
-                  throw new Error(`Failed to fetch ${url}: ${response.status}`);
-                }
-                return cache.put(url, response);
-              })
-              .catch((error) => {
-                console.warn(`Could not cache ${url}:`, error);
-                return Promise.resolve(); // Don't fail the entire install
-              });
-          })
-        );
-      })
+    caches.keys().then((cacheNames) => {
+      // Delete all old caches first
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          console.log('Deleting old cache:', cacheName);
+          return caches.delete(cacheName);
+        })
+      );
+    }).then(() => {
+      // Now open new cache and add files
+      return caches.open(CACHE_NAME);
+    }).then((cache) => {
+      console.log('New cache opened:', CACHE_NAME);
+      return cache.addAll(urlsToCache);
+    }).catch((error) => {
+      console.log('Cache installation failed:', error);
+    })
   );
 });
 
-// Activate event - aggressive cleanup for mobile
+// Activate event - aggressive cleanup
 self.addEventListener('activate', (event) => {
-  console.log('Service Worker activating for mobile.');
+  console.log('Service Worker activating v3.0');
   
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
-          // Delete any old caches (mobile devices have limited storage)
           if (cacheName !== CACHE_NAME) {
-            console.log('Deleting old mobile cache:', cacheName);
+            console.log('Deleting old cache during activation:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
-    })
-    // Take immediate control (critical for mobile)
-    .then(() => self.clients.claim())
+    }).then(() => self.clients.claim())
   );
 });
 
@@ -75,20 +68,17 @@ self.addEventListener('fetch', (event) => {
     return;
   }
   
-  // Special handling for PDF files (including your resume)
+  // Special handling for PDF files
   if (event.request.url.includes('.pdf')) {
     event.respondWith(
       caches.match(event.request)
         .then((response) => {
-          // Return cached PDF if available
           if (response) {
             return response;
           }
           
-          // Otherwise, try to fetch from network
           return fetch(event.request)
             .then((fetchResponse) => {
-              // Cache the PDF for future offline use
               const responseClone = fetchResponse.clone();
               caches.open(CACHE_NAME)
                 .then((cache) => {
@@ -121,15 +111,12 @@ self.addEventListener('fetch', (event) => {
           return response;
         }
         
-        // For mobile, try to cache as we go
         return fetch(event.request)
           .then((response) => {
-            // Don't cache if not a valid response
             if (!response || response.status !== 200 || response.type !== 'basic') {
               return response;
             }
             
-            // Clone the response for caching
             const responseToCache = response.clone();
             
             caches.open(CACHE_NAME)
@@ -143,22 +130,20 @@ self.addEventListener('fetch', (event) => {
             return response;
           })
           .catch((error) => {
-            console.log('Fetch failed on mobile:', error);
+            console.log('Fetch failed:', error);
             
-            // Special handling for HTML pages on mobile
             if (event.request.destination === 'document' || 
                 event.request.headers.get('accept').includes('text/html')) {
               return caches.match(OFFLINE_URL);
             }
             
-            // For other resources, return a generic error
             return Response.error();
           });
       })
   );
 });
 
-// Message event handler for mobile
+// Message event handler
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();

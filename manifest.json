@@ -1,8 +1,8 @@
 {
-  "name": "Raihan Rashid Portfolio",
+  "name": "Raihan Rashid Portfolio v3",
   "short_name": "RaihanPortfolio",
-  "description": "Computer Science graduate portfolio",
-  "start_url": "/",
+  "description": "Computer Science graduate portfolio - Version 3",
+  "start_url": "/?v=3.0",
   "display": "standalone",
   "background_color": "#f8f9fa",
   "theme_color": "#2563eb",

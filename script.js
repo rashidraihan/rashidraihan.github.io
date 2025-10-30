@@ -1,3 +1,40 @@
+// === CACHE BUSTING AND VERSION CONTROL ===
+const SITE_VERSION = '3.0';
+
+// Force cache clear on version change
+if (localStorage.getItem('siteVersion') !== SITE_VERSION) {
+  console.log('New version detected:', SITE_VERSION);
+  
+  // Clear all caches
+  if ('caches' in window) {
+    caches.keys().then((cacheNames) => {
+      cacheNames.forEach((cacheName) => {
+        caches.delete(cacheName);
+      });
+    });
+  }
+  
+  // Clear service worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      registrations.forEach((registration) => {
+        registration.unregister();
+      });
+    });
+  }
+  
+  // Clear storage
+  sessionStorage.clear();
+  localStorage.clear();
+  
+  // Set new version
+  localStorage.setItem('siteVersion', SITE_VERSION);
+  localStorage.setItem('theme', 'light'); // Reset theme to default
+  
+  // Force reload
+  window.location.reload();
+}
+
 // === CONFIGURATION ===
 const CONFIG = {
   greetings: [

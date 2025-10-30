@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Raihan Rashid</title>
+  <title>Raihan Rashid - Experiments</title>
   
   <!-- Preload important resources -->
-  <link rel="preload" href="styles.css" as="style">
-  <link rel="preload" href="script.js" as="script">
+  <link rel="preload" href="styles.css?v=3.0" as="style">
+  <link rel="preload" href="script.js?v=3.0" as="script">
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=3.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   
   <!-- Favicon -->
@@ -21,6 +21,11 @@
   
   <!-- Theme Color -->
   <meta name="theme-color" content="#2563eb">
+  
+  <!-- Prevent caching -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   
   <!-- PWA Support -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -95,12 +100,20 @@
       <h1 class="page-title">Experiments</h1>
       
       <div class="experiments-grid">
+        <a href="https://github.com/rashidraihan/DeepSurf-AI-powered-Android-Malware-Detection" target="_blank" class="experiment-card">
+          <h3 class="experiment-title">DeepSurf: AI-powered Android Malware Detection</h3>
+          <p class="experiment-description">An AI-powered system for detecting Android malware using deep learning techniques and static analysis of APK files.</p>
+        </a>
+
+        <a href="https://github.com/rashidraihan/Hybrid-Explainable-Framework-for-Stroke-Prediction" target="_blank" class="experiment-card">
+          <h3 class="experiment-title">Hybrid Explainable Framework for Stroke Prediction</h3>
+          <p class="experiment-description">A hybrid machine learning framework with explainable AI capabilities for predicting stroke risk using medical data.</p>
+        </a>
+
         <a href="https://github.com/rashidraihan/Turtle-Shell" target="_blank" class="experiment-card">
           <h3 class="experiment-title">Turtle Shell</h3>
           <p class="experiment-description">A Unix-like shell written in Python supporting command history, navigation, and error handling.</p>
         </a>
-        
-        <!-- You can add more experiment cards here in the future -->
       </div>
     </main>
   </div>
@@ -115,6 +128,6 @@
     <p>&copy; Raihan Rashid 2025</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=3.0"></script>
 </body>
 </html>
