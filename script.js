@@ -38,10 +38,10 @@ if (localStorage.getItem('siteVersion') !== SITE_VERSION) {
 // === CONFIGURATION ===
 const CONFIG = {
   greetings: [
-    'As-salamu Alaykum', 'السلام عليكم', 'আসসালামু আলাইকুম', 'Hey!',
+    'Wassup!', 'আসসালামু আলাইকুম', 'السلام عليكم', 'Hey!',
     '¡Hola!', 'Bonjour!', 'Ciao!', 'Hallo!', 'Olá!', 'こんにちは!',
-    '안녕하세요!', '你好!', 'Привет!', 'Здраво!', 'Γειά σου!',
-    'สวัสดี!', 'హలో!', 'Wassup!', 'مرحبًا!'
+    '안녕하세요!', '你好!', 'Привет!', 'Здраво!',
+    'สวัสดี!', 'హలో!', 'مرحبًا!'
   ],
   typingSpeed: 60,
   pauseBetweenGreetings: 1600,
