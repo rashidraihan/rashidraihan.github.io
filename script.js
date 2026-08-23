@@ -1,5 +1,5 @@
 // === CACHE BUSTING AND VERSION CONTROL ===
-const SITE_VERSION = '3.3';
+const SITE_VERSION = '3.4';
 
 // Force cache clear on version change
 if (localStorage.getItem('siteVersion') !== SITE_VERSION) {
@@ -134,6 +134,12 @@ function setupMatrixGlitch() {
 }
 
 // === THEME MANAGEMENT ===
+function applyThemeColorMeta() {
+  const meta = document.getElementById('themeColorMeta');
+  if (!meta) return;
+  meta.setAttribute('content', document.body.classList.contains('dark') ? '#0a0a14' : '#f8f9fa');
+}
+
 function toggleTheme() {
   document.body.classList.toggle('dark');
   
@@ -144,6 +150,8 @@ function toggleTheme() {
   
   // Save preference
   localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+  
+  applyThemeColorMeta();
 }
 
 // === NAVIGATION ===
@@ -214,6 +222,7 @@ function handleContactForm() {
 function init() {
   // Apply saved theme
   if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+  applyThemeColorMeta();
   
   // Initialize animations
   createStars();
