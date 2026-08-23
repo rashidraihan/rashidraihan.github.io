@@ -1,5 +1,5 @@
 // === CACHE BUSTING AND VERSION CONTROL ===
-const SITE_VERSION = '3.0';
+const SITE_VERSION = '3.3';
 
 // Force cache clear on version change
 if (localStorage.getItem('siteVersion') !== SITE_VERSION) {
@@ -37,64 +37,23 @@ if (localStorage.getItem('siteVersion') !== SITE_VERSION) {
 
 // === CONFIGURATION ===
 const CONFIG = {
-  greetings: [
-    'Wassup!', 'আসসালামু আলাইকুম', 'السلام عليكم', 'Hey!',
-    '¡Hola!', 'Bonjour!', 'Ciao!', 'Hallo!', 'Olá!', 'こんにちは!',
-    '안녕하세요!', '你好!', 'Привет!', 'Здраво!',
-    'สวัสดี!', 'హలో!', 'مرحبًا!'
-  ],
-  typingSpeed: 60,
-  pauseBetweenGreetings: 1600,
-  starCount: 100,
+  starCount: 50,
   letters: "10101010101010101010101010101010101010101010101010101010101010101010",
   cacheName: 'portfolio-cache'
 };
 
 // === STATE MANAGEMENT ===
-let state = {
-  greetIndex: 0,
-  charIndex: 0,
-  isOnline: true,
-  onlineStatusListeners: []
-};
+let state = {};
 
 // === DOM ELEMENTS ===
 const elements = {
-  greeting: document.getElementById('greeting'),
   spaceBg: document.getElementById('spaceBg'),
   mobileNav: document.getElementById('mobileNav'),
   menuToggle: document.querySelector('.mobile-menu-toggle'),
   contactForm: document.getElementById('contactForm')
 };
 
-// === UTILITY FUNCTIONS ===
-function isMobileDevice() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
-
-function addOnlineStatusListener(callback) {
-  state.onlineStatusListeners.push(callback);
-  callback(state.isOnline);
-}
-
 // === ANIMATIONS ===
-function typeGreeting() {
-  if (!elements.greeting) return;
-  
-  if (state.charIndex < CONFIG.greetings[state.greetIndex].length) {
-    elements.greeting.textContent += CONFIG.greetings[state.greetIndex][state.charIndex];
-    state.charIndex++;
-    setTimeout(typeGreeting, CONFIG.typingSpeed);
-  } else {
-    setTimeout(() => {
-      elements.greeting.textContent = '';
-      state.charIndex = 0;
-      state.greetIndex = (state.greetIndex + 1) % CONFIG.greetings.length;
-      typeGreeting();
-    }, CONFIG.pauseBetweenGreetings);
-  }
-}
-
 function createStars() {
   if (!elements.spaceBg) return;
   
@@ -114,7 +73,7 @@ function createStars() {
     star.style.animationDelay = `${delay}s`;
     
     // Set initial opacity based on theme
-    star.style.opacity = document.body.classList.contains('dark') ? '0.3' : '0';
+    star.style.opacity = document.body.classList.contains('dark') ? '0.15' : '0';
     
     elements.spaceBg.appendChild(star);
   }
@@ -180,7 +139,7 @@ function toggleTheme() {
   
   // Update stars visibility
   document.querySelectorAll('.star').forEach(star => {
-    star.style.opacity = document.body.classList.contains('dark') ? '0.3' : '0';
+    star.style.opacity = document.body.classList.contains('dark') ? '0.15' : '0';
   });
   
   // Save preference
@@ -251,124 +210,12 @@ function handleContactForm() {
   });
 }
 
-// === OFFLINE FUNCTIONALITY ===
-function registerServiceWorker() {
-  if (!('serviceWorker' in navigator)) return;
-  
-  navigator.serviceWorker.register('/sw.js')
-    .then((registration) => {
-      console.log('SW registered: ', registration);
-      
-      // Check for updates periodically
-      setInterval(() => registration.update(), isMobileDevice() ? 30 * 60 * 1000 : 60 * 60 * 1000);
-    })
-    .catch((registrationError) => {
-      console.log('SW registration failed: ', registrationError);
-      
-      // Retry on mobile
-      if (isMobileDevice()) setTimeout(registerServiceWorker, 5000);
-    });
-}
-
-function updateOnlineStatus() {
-  const newStatus = navigator.onLine;
-  
-  if (newStatus !== state.isOnline) {
-    state.isOnline = newStatus;
-    
-    if (state.isOnline) {
-      hideOfflineIndicator();
-      
-      if (sessionStorage.getItem('wasOffline') === 'true') {
-        setTimeout(() => {
-          sessionStorage.removeItem('wasOffline');
-          window.location.reload();
-        }, isMobileDevice() ? 3000 : 1000);
-      }
-    } else {
-      showOfflineIndicator();
-      sessionStorage.setItem('wasOffline', 'true');
-      
-      if (isMobileDevice()) checkCurrentPageAvailability();
-    }
-    
-    state.onlineStatusListeners.forEach(listener => listener(state.isOnline));
-  }
-}
-
-function showOfflineIndicator() {
-  hideOfflineIndicator();
-  
-  const indicator = document.createElement('div');
-  indicator.id = 'offline-indicator';
-  indicator.innerHTML = '📶 Offline - Showing cached version';
-  indicator.style.cssText = `
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #ff9800;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    z-index: 10000;
-    font-size: 14px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    animation: slideIn 0.3s ease;
-    font-family: 'Inter', sans-serif;
-  `;
-  
-  document.body.appendChild(indicator);
-}
-
-function hideOfflineIndicator() {
-  const indicator = document.getElementById('offline-indicator');
-  if (indicator) indicator.remove();
-}
-
-function checkResumeAvailability() {
-  const resumeLinks = document.querySelectorAll('a[href*="resume.pdf"]');
-  
-  if (!navigator.onLine) {
-    caches.match('/resume.pdf').then(response => {
-      if (!response) {
-        resumeLinks.forEach(link => {
-          link.style.opacity = '0.7';
-          link.title = 'Connect to internet';
-          
-          link.onclick = function(e) {
-            e.preventDefault();
-            alert('Resume not available offline. Please connect to the internet.');
-            return false;
-          };
-        });
-      }
-    });
-  } else {
-    resumeLinks.forEach(link => {
-      link.style.opacity = '';
-      link.title = '';
-      link.onclick = null;
-    });
-  }
-}
-
-function checkCurrentPageAvailability() {
-  const currentPage = window.location.pathname;
-  
-  if (currentPage !== '/' && currentPage !== '/index.html') {
-    caches.match(currentPage).then(response => {
-      if (!response) console.warn('Current page not in cache:', currentPage);
-    });
-  }
-}
-
 // === INITIALIZATION ===
 function init() {
   // Apply saved theme
   if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
   
   // Initialize animations
-  typeGreeting();
   createStars();
   setupMatrixGlitch();
   
@@ -377,24 +224,7 @@ function init() {
   
   // Initialize forms
   handleContactForm();
-  
-  // Initialize offline functionality
-  registerServiceWorker();
-  updateOnlineStatus();
-  checkResumeAvailability();
-  
-  // Set up periodic checks
-  setInterval(checkResumeAvailability, isMobileDevice() ? 15000 : 30000);
-  
-  // Add cursor pointer to profile images
-  document.querySelectorAll('.profile-image').forEach(img => {
-    img.style.cursor = 'pointer';
-  });
 }
 
 // Start everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', init);
-
-// Listen for online/offline events
-window.addEventListener('online', updateOnlineStatus);
-window.addEventListener('offline', updateOnlineStatus);

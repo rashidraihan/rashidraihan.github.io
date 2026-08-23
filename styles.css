@@ -51,24 +51,26 @@ header {
   gap: 1.5rem;
 }
 
-.profile-image {
-  width: 80px;
-  height: 80px;
-  overflow: hidden;
-  position: relative;
-  border: 2px solid var(--accent);
+.logo-wordmark {
+  font-family: 'Space Grotesk', -apple-system, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   cursor: pointer;
-  border-radius: 8px;
+  color: var(--light-text);
+  transition: var(--transition);
 }
 
-body.dark .profile-image {
-  border-color: var(--accent-dark);
+body.dark .logo-wordmark {
+  color: var(--dark-text);
 }
 
-.profile-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.logo-wordmark:hover {
+  color: var(--accent);
+}
+
+body.dark .logo-wordmark:hover {
+  color: var(--accent-dark);
 }
 
 .name-title h1 {
@@ -304,14 +306,6 @@ main {
   min-height: 60vh;
 }
 
-.greeting {
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin-bottom: 2rem;
-  min-height: 2.5rem;
-  font-family: 'Fira Code', monospace;
-}
-
 .intro {
   max-width: 700px;
   margin-bottom: 3rem;
@@ -448,8 +442,33 @@ body.dark .star {
 }
 
 @keyframes twinkle {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 1; }
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.6; }
+}
+
+/* Homepage Selected Work section */
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.view-all-link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+body.dark .view-all-link {
+  color: var(--accent-dark);
+}
+
+.view-all-link:hover {
+  opacity: 0.75;
 }
 
 /* Page title styles */
@@ -547,7 +566,8 @@ body.dark .column-excerpt {
 .experiment-card {
   background-color: var(--card-light);
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 0;
+  overflow: hidden;
   transition: var(--transition);
   text-decoration: none;
   color: inherit;
@@ -571,6 +591,34 @@ body.dark .experiment-card {
 body.dark .experiment-card:hover {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   border-color: var(--accent-dark);
+}
+
+.experiment-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-color: #111;
+  flex-shrink: 0;
+}
+
+.experiment-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  transition: var(--transition);
+}
+
+.experiment-card:hover .experiment-image img {
+  transform: scale(1.04);
+}
+
+.experiment-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .experiment-title {
@@ -810,6 +858,10 @@ body.dark .nav-link .glitch-overlay {
     font-size: 1.6rem;
   }
   
+  .logo-wordmark {
+    font-size: 1.25rem;
+  }
+  
   .page-title {
     font-size: 2rem;
   }
@@ -852,15 +904,6 @@ body.dark .nav-link .glitch-overlay {
 @media (max-width: 480px) {
   .container {
     padding: 0 1rem;
-  }
-  
-  .greeting {
-    font-size: 1.5rem;
-  }
-  
-  .profile-image {
-    width: 50px;
-    height: 50px;
   }
   
   .header-content {

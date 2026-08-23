@@ -6,36 +6,18 @@
   <title>Raihan Rashid</title>
   
   <!-- Preload important resources -->
-  <link rel="preload" href="styles.css?v=3.0" as="style">
-  <link rel="preload" href="script.js?v=3.0" as="script">
+  <link rel="preload" href="styles.css?v=3.3" as="style">
+  <link rel="preload" href="script.js?v=3.3" as="script">
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="styles.css?v=3.0">
+  <link rel="stylesheet" href="styles.css?v=3.3">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   
   <!-- Favicon -->
   <link rel="icon" href="tabphoto.ico" type="image/x-icon">
-  
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="/manifest.json">
-  
-  <!-- Theme Color -->
-  <meta name="theme-color" content="#2563eb">
-  
-  <!-- PWA Support -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Raihan Portfolio">
-  <link rel="apple-touch-icon" href="/images/wraihan.png">
-  <link rel="apple-touch-startup-image" href="/images/wraihan.png">
-  
-  <!-- Chrome Mobile -->
-  <meta name="mobile-web-app-capable" content="yes">
-  
-  <!-- Windows -->
-  <meta name="msapplication-TileImage" content="/images/wraihan.png">
-  <meta name="msapplication-TileColor" content="#2563eb">
-  <meta name="msapplication-config" content="/browserconfig.xml">
   
   <!-- Prevent telephone number detection -->
   <meta name="format-detection" content="telephone=no">
@@ -46,18 +28,11 @@
   <div class="container">
     <header>
       <div class="header-content">
-        <div class="profile-image" onclick="goToHome()">
-          <img src="/images/wraihan.png" alt="Raihan Rashid">
-        </div>
-        <div class="name-title">
-          <!-- <h1>Raihan Rashid</h1>
-          <p>wraihan.exe</p> -->
-        </div>
+        <div class="logo-wordmark" onclick="goToHome()">RAIHAN</div>
       </div>
       
       <div class="header-right">
         <nav class="desktop-nav">
-          <a href="column.html" class="nav-link" data-value="Column">Column</a>
           <a href="experiments.html" class="nav-link" data-value="Experiments">Experiments</a>
         </nav>
         
@@ -83,7 +58,6 @@
 
     <div class="mobile-nav" id="mobileNav">
       <div class="mobile-nav-content">
-        <a href="column.html" class="nav-link" data-value="Column">Column</a>
         <a href="experiments.html" class="nav-link" data-value="Experiments">Experiments</a>
         
         <div class="mobile-nav-footer">
@@ -96,8 +70,6 @@
     </div>
 
     <main>
-      <div class="greeting" id="greeting"></div>
-      
       <div class="intro">
         <p>I'm Raihan Rashid.</p>
         <p>Computer Science graduate from North South University, Dhaka.</p>
@@ -106,6 +78,34 @@
         <p>Want to know more?</p> 
         <p>See my <a href="doc/rashid+raihan+resume.pdf">resume</a> or email me at <i>(rashidraihan021 [at] gmail [dot] com)</i>.</p>
       </div>
+
+      <h2 class="section-title">Selected Work</h2>
+      <div class="experiments-grid">
+        <a href="https://github.com/rashidraihan/DeepSurf-AI-powered-Android-Malware-Detection" target="_blank" class="experiment-card">
+          <div class="experiment-image"><img src="images/projects/deepsurf.png" alt="DeepSurf live demo detecting Android malware and benign traffic"></div>
+          <div class="experiment-body">
+            <h3 class="experiment-title">DeepSurf</h3>
+            <p class="experiment-description">AI-powered Android malware detection using deep learning and static APK analysis. Co-authored, published at IEMTRONICS 2025 (Springer).</p>
+          </div>
+        </a>
+
+        <a href="https://github.com/rashidraihan/Hybrid-Explainable-Framework-for-Stroke-Prediction" target="_blank" class="experiment-card">
+          <div class="experiment-image"><img src="images/projects/stroke-prediction.png" alt="Model accuracy comparison chart for the stroke prediction framework"></div>
+          <div class="experiment-body">
+            <h3 class="experiment-title">Stroke Prediction Framework</h3>
+            <p class="experiment-description">A hybrid ML framework with explainable AI for predicting stroke risk from medical data.</p>
+          </div>
+        </a>
+
+        <a href="https://github.com/rashidraihan/Turtle-Shell" target="_blank" class="experiment-card">
+          <div class="experiment-image"><img src="images/projects/turtle-shell.png" alt="Turtle Shell terminal session showing commands in use"></div>
+          <div class="experiment-body">
+            <h3 class="experiment-title">Turtle Shell</h3>
+            <p class="experiment-description">A Unix-like shell written in Python — command history, navigation, error handling.</p>
+          </div>
+        </a>
+      </div>
+      <a href="experiments.html" class="view-all-link">View all experiments &rarr;</a>
     </main>
   </div>
 
@@ -119,6 +119,6 @@
     <p>&copy; Raihan Rashid 2026</p>
   </footer>
 
-  <script src="script.js?v=3.0"></script>
+  <script src="script.js?v=3.3"></script>
 </body>
 </html>
