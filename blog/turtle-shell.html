@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Writing a shell taught me what a shell actually does — Raihan Rashid</title>
+
+  <link rel="preload" href="../styles.css?v=5.1" as="style">
+  <link rel="preload" href="../script.js?v=5.1" as="script">
+
+  <link rel="stylesheet" href="../styles.css?v=5.1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="icon" href="../tabphoto.ico" type="image/x-icon">
+
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0a14">
+
+  <meta name="format-detection" content="telephone=no">
+</head>
+<body class="dark">
+  <svg width="0" height="0" style="position:absolute">
+    <filter id="heatDistort" x="-20%" y="-50%" width="140%" height="200%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.09" numOctaves="2" seed="7" result="turb">
+        <animate attributeName="baseFrequency" dur="3.5s" values="0.012 0.09;0.018 0.14;0.012 0.09" repeatCount="indefinite" />
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="turb" scale="3.2" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </svg>
+  <div class="space-bg" id="spaceBg"></div>
+
+  <div class="container">
+    <header>
+      <div class="header-content">
+        <div class="logo-wordmark" onclick="goToHome()">RAIHAN</div>
+      </div>
+
+      <div class="header-right">
+        <nav class="desktop-nav">
+          <a href="../blog.html" class="nav-link" data-value="blog">blog</a>
+          <a href="https://github.com/rashidraihan" target="_blank" class="nav-link" data-value="github">github</a>
+          <div class="nav-dropdown">
+            <span class="nav-link" data-value="socials" tabindex="0">socials</span>
+            <div class="nav-dropdown-menu">
+              <a href="https://x.com/Obsraihan" target="_blank" class="nav-link" data-value="x">x</a>
+              <a href="https://www.linkedin.com/in/rashidraihan021/" target="_blank" class="nav-link" data-value="linkedin">linkedin</a>
+              <a href="https://kaggle.com/raihanrashid021" target="_blank" class="nav-link" data-value="kaggle">kaggle</a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <article class="post">
+        <h1 class="post-title">Writing a shell taught me what a shell actually does</h1>
+        <p class="post-date">Aug 15, 2026</p>
+        <div class="post-tags">
+          <span class="tag">#python</span>
+          <span class="tag">#systems</span>
+        </div>
+
+        <hr class="post-divider">
+
+        <p>I've typed into a terminal every day for years without ever really asking what happens between hitting Enter and getting an answer back. Turtle Shell started as an attempt to close that gap — a Unix-like shell, written in Python, with command history, navigation, and error handling, built from nothing but the standard library and a lot of trial and error.</p>
+
+        <p>The commands themselves — mapping a directory, listing files, tracking a history log — were the easy part. What actually ate my time was error handling, and specifically how much I'd underestimated it. "Handle errors gracefully" sounds like a checkbox until you're the one deciding what should happen when someone asks for a file that doesn't exist, or types a command that's almost right but not quite, or feeds the shell an empty string. Every one of those is a small design decision, and a real shell makes hundreds of them without you ever noticing.</p>
+
+        <img src="../images/projects/turtle-shell.png" alt="Turtle Shell terminal session showing commands in use" class="post-image">
+        <p class="post-image-caption">A real session — mapping a directory, checking inventory, logging today's date, and reviewing command history.</p>
+
+        <p>That screenshot is an actual session, not a staged demo — <code>map</code> to locate the working directory, <code>inventory</code> to list what's in it, <code>today</code> to check and set the date, <code>record</code> to pull up the command history. Small utilities, but each one forced me to think about state: what the shell remembers between commands, what it forgets, and what it should never silently get wrong.</p>
+
+        <p>It's the smallest project of the three I've written about here, and probably the one I reach for the most, because it's not a demo — it's a tool I actually use. That's a different kind of finished than "the model hit its target metric."</p>
+
+        <hr class="post-divider">
+        <p><a href="../blog.html" class="rc-underline">&larr; Back to all posts</a></p>
+      </article>
+    </main>
+  </div>
+
+  <footer>
+    <a href="https://github.com/rashidraihan" target="_blank" class="footer-github rc-color"><i class="fab fa-github"></i></a>
+    <p class="rc-color">&copy; Raihan Rashid 2026</p>
+  </footer>
+
+  <script src="../script.js?v=5.1"></script>
+</body>
+</html>
