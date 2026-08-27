@@ -1,5 +1,5 @@
 // === CACHE BUSTING AND VERSION CONTROL ===
-const SITE_VERSION = '5.1';
+const SITE_VERSION = '5.3';
 
 if (localStorage.getItem('siteVersion') !== SITE_VERSION) {
   console.log('New version detected:', SITE_VERSION);
@@ -104,12 +104,13 @@ function setupNavGlitch() {
   });
 }
 
-// Logo changes color on hover (heat-haze filter runs continuously via SVG)
+// Logo/brand text changes color on hover (heat-haze filter runs
+// continuously via SVG) — same effect on every page's brand text.
 function setupLogoHover() {
-  const logo = document.querySelector('.logo-wordmark');
-  if (!logo) return;
-  logo.addEventListener('mouseenter', () => {
-    logo.style.setProperty('--logo-color', randomColor());
+  document.querySelectorAll('.logo-wordmark').forEach(logo => {
+    logo.addEventListener('mouseenter', () => {
+      logo.style.setProperty('--logo-color', randomColor());
+    });
   });
 }
 
@@ -140,25 +141,18 @@ function setupRandomPostLink() {
 }
 
 // === NAVIGATION ===
-function goToHome() {
-  const path = window.location.pathname;
-  if (path.includes('/blog/')) {
-    window.location.href = '../index.html';
-  } else if (!path.endsWith('index.html') && path !== '/' && !path.endsWith('/')) {
-    window.location.href = 'index.html';
-  }
-}
-
 function highlightCurrentPage() {
   const path = window.location.pathname;
   const currentPage = path.split('/').pop() || 'index.html';
   const isBlogSection = currentPage === 'blog.html' || path.includes('/blog/');
+  const isHome = currentPage === 'index.html' || currentPage === '';
+  const isSocials = currentPage === 'socials.html';
 
   document.querySelectorAll('.desktop-nav .nav-link').forEach(link => {
     link.classList.remove('active');
-    if (isBlogSection && link.dataset.value === 'blog') {
-      link.classList.add('active');
-    }
+    if (isBlogSection && link.dataset.value === 'blog') link.classList.add('active');
+    if (isHome && link.dataset.value === 'home') link.classList.add('active');
+    if (isSocials && link.dataset.value === 'socials') link.classList.add('active');
   });
 }
 

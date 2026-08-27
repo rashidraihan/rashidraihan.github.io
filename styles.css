@@ -2,6 +2,7 @@
   --dark-bg: #0a0a14;
   --dark-text: #e0e0e0;
   --card-dark: #151522;
+  --line: #ffffff;
 }
 
 * {
@@ -10,34 +11,52 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: var(--dark-bg);
   color: var(--dark-text);
   line-height: 1.6;
   overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .container {
-  max-width: 1200px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Narrow reading column, consistent on every page — no full-bleed screens */
+.container {
+  max-width: 760px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
-/* Header — sticky, blurred, scrolls with the page */
+/* Header — sticky, blurred, low-opacity, stays fixed in shape while scrolling */
 header {
   position: sticky;
   top: 0;
   z-index: 100;
+  padding: 1.25rem 1.5rem;
+  background-color: rgba(10, 10, 20, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  margin: 0 -1.5rem;
+}
+
+.header-inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  padding: 1.25rem 1.5rem;
-  background-color: rgba(10, 10, 20, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  margin: 0 -1.5rem;
+  gap: 1rem;
 }
 
 .header-content {
@@ -51,12 +70,11 @@ header {
   font-family: 'Space Grotesk', -apple-system, sans-serif;
   font-size: 1.5rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
-  cursor: pointer;
+  letter-spacing: 0.02em;
   color: var(--logo-color);
   transition: color 0.25s ease;
-  filter: url(#heatDistort);
   display: inline-block;
+  cursor: default;
 }
 
 .header-right {
@@ -108,40 +126,10 @@ header {
   width: 100%;
 }
 
-/* "socials" dropdown */
-.nav-dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.nav-dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  margin-top: 0.5rem;
-  background-color: rgba(21, 21, 34, 0.95);
-  backdrop-filter: blur(8px);
-  border: 1px solid #2a2a3a;
-  border-radius: 8px;
-  white-space: nowrap;
-  z-index: 50;
-}
-
-.nav-dropdown:hover .nav-dropdown-menu,
-.nav-dropdown:focus-within .nav-dropdown-menu {
-  display: flex;
-}
-
 /* === Rainbow link system ===
    Continuously cycling colored underlines/text, driven by JS setting
-   --rc-color on each element. Used for content links, post titles,
-   tags, and footer text. Nav links + logo use their own hover-only
-   mechanism above instead. */
+   --rc-color on each element. Nav links + logo use their own
+   hover-only mechanism above instead. */
 .rc-underline {
   --rc-color: #4a9eff;
   text-decoration: underline;
@@ -162,11 +150,10 @@ header {
 /* Intro */
 main {
   padding: 2.5rem 0;
-  min-height: 60vh;
+  flex: 1;
 }
 
 .intro {
-  max-width: 700px;
   margin-bottom: 3rem;
   font-size: 1.05rem;
 }
@@ -193,42 +180,79 @@ main {
 .page-title {
   font-size: 2.3rem;
   font-weight: 700;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.25rem;
+  font-family: 'Space Grotesk', -apple-system, sans-serif;
 }
 
-/* Tag pills */
+.page-subtitle {
+  color: #999;
+  margin-bottom: 1.75rem;
+}
+
+/* Tags — rounded pill chips, always real links */
 .tag {
+  --rc-color: #4a9eff;
   display: inline-block;
   font-family: 'Fira Code', monospace;
   font-size: 0.8rem;
-  padding: 0.15rem 0.5rem;
-  border-radius: 4px;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--rc-color);
+  color: var(--rc-color);
   text-decoration: none;
+  cursor: pointer;
+  transition: color 0.5s ease, border-color 0.5s ease, background-color 0.2s ease;
+}
+
+.tag:hover {
   background-color: rgba(255, 255, 255, 0.06);
 }
 
 .tag-filter-bar {
   display: flex;
-  gap: 0.6rem;
+  gap: 0.9rem;
   flex-wrap: wrap;
   margin-bottom: 1.75rem;
 }
 
+.tag-filter-heading {
+  font-family: 'Fira Code', monospace;
+  text-align: center;
+  color: #999;
+  margin-bottom: 1rem;
+}
+
+.section-divider {
+  border: none;
+  border-top: 1px solid #fff;
+  margin: 1.75rem 0;
+}
+
+.pre-footer-tags {
+  padding-top: 0;
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.pre-footer-tags .tag-filter-bar {
+  justify-content: center;
+}
+
+/* Blog calendar — year links */
 .year-row {
   display: flex;
   gap: 1.25rem;
   flex-wrap: wrap;
-  margin-bottom: 1.75rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid #2a2a3a;
+  margin-bottom: 0;
   font-family: 'Fira Code', monospace;
 }
 
 .year-heading {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #888;
-  margin: 2rem 0 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 2.5rem 0 1.25rem;
+  font-family: 'Space Grotesk', -apple-system, sans-serif;
 }
 
 /* Blog post list */
@@ -240,11 +264,14 @@ main {
 }
 
 .post-item {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.post-item-link {
   text-decoration: none;
   color: inherit;
   display: block;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid #2a2a3a;
 }
 
 .post-item-title {
@@ -269,13 +296,10 @@ main {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+  margin-top: 0.5rem;
 }
 
 /* Single blog post */
-.post {
-  max-width: 720px;
-}
-
 .post-title {
   font-size: 2rem;
   font-weight: 700;
@@ -299,7 +323,7 @@ main {
 
 .post-divider {
   border: none;
-  border-top: 1px solid #2a2a3a;
+  border-top: 1px solid var(--line);
   margin: 2rem 0;
 }
 
@@ -334,7 +358,21 @@ main {
   margin-bottom: 1.5rem !important;
 }
 
-/* Footer */
+/* Post pagination — Newer / Random / Older */
+.post-nav {
+  border-top: 1px solid var(--line);
+  padding-top: 1.5rem;
+  margin-top: 2rem;
+  text-align: center;
+  font-family: 'Fira Code', monospace;
+}
+
+.post-nav .sep {
+  color: #666;
+  margin: 0 0.6rem;
+}
+
+/* Footer — plain, no color cycling */
 footer {
   padding: 3rem 0 2rem;
   text-align: center;
@@ -345,10 +383,12 @@ footer {
   display: inline-block;
   margin-bottom: 1rem;
   text-decoration: none;
+  color: var(--dark-text);
 }
 
 footer p {
   font-size: 0.9rem;
+  color: #999;
 }
 
 /* Space background */
@@ -374,6 +414,17 @@ footer p {
   50% { opacity: 0.6; }
 }
 
+/* Socials page */
+.socials-list {
+  list-style: none;
+  margin: 1.5rem 0 2.5rem;
+}
+
+.socials-list li {
+  margin-bottom: 0.85rem;
+  font-size: 1.05rem;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   header {
@@ -385,7 +436,6 @@ footer p {
   }
 
   .desktop-nav {
-    order: 3;
     width: 100%;
     justify-content: center;
     gap: 1rem;
@@ -398,6 +448,10 @@ footer p {
 
   .page-title {
     font-size: 1.9rem;
+  }
+
+  .year-heading {
+    font-size: 1.6rem;
   }
 
   .post-title {
