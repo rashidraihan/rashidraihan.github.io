@@ -1,5 +1,5 @@
 // === CACHE BUSTING AND VERSION CONTROL ===
-const SITE_VERSION = '5.3';
+const SITE_VERSION = '5.5';
 
 if (localStorage.getItem('siteVersion') !== SITE_VERSION) {
   console.log('New version detected:', SITE_VERSION);
@@ -104,8 +104,7 @@ function setupNavGlitch() {
   });
 }
 
-// Logo/brand text changes color on hover (heat-haze filter runs
-// continuously via SVG) — same effect on every page's brand text.
+// Logo/brand text changes color on hover — same effect on every page's brand text.
 function setupLogoHover() {
   document.querySelectorAll('.logo-wordmark').forEach(logo => {
     logo.addEventListener('mouseenter', () => {
@@ -114,10 +113,11 @@ function setupLogoHover() {
   });
 }
 
-// Content links, post titles, tags, and footer text continuously
-// cycle through the palette, and jump to a fresh color on hover.
+// Content links and post titles continuously cycle through the
+// palette, and jump to a fresh color on hover. Tags have their own
+// separate hover-only glow effect defined in CSS.
 function setupRainbowLinks() {
-  document.querySelectorAll('.rc-underline, .rc-color, .tag').forEach(el => {
+  document.querySelectorAll('.rc-underline, .rc-color').forEach(el => {
     const cycle = () => el.style.setProperty('--rc-color', randomColor());
     cycle();
     setInterval(cycle, 2200 + Math.random() * 1800);
@@ -137,6 +137,43 @@ function setupRandomPostLink() {
       const prefix = window.location.pathname.includes('/blog/') ? '../' : '';
       window.location.href = prefix + pick;
     });
+  });
+}
+
+// === TAG FILTERING (blog.html only) ===
+// Reads ?tag=slug from the URL and shows only matching posts.
+function setupTagFilter() {
+  const postList = document.getElementById('postList');
+  const filterStatus = document.getElementById('filterStatus');
+  if (!postList || !filterStatus) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const activeTag = params.get('tag');
+  const items = postList.querySelectorAll('.post-item');
+
+  if (!activeTag) {
+    items.forEach(item => { item.style.display = ''; });
+    filterStatus.style.display = 'none';
+    return;
+  }
+
+  let matchCount = 0;
+  items.forEach(item => {
+    const tags = (item.dataset.tags || '').split(' ');
+    const matches = tags.includes(activeTag);
+    item.style.display = matches ? '' : 'none';
+    if (matches) matchCount++;
+  });
+
+  filterStatus.style.display = 'block';
+  filterStatus.innerHTML = matchCount > 0
+    ? `Showing posts tagged <strong>#${activeTag}</strong> &middot; <a href="blog.html" class="rc-underline">clear filter</a>`
+    : `No posts tagged <strong>#${activeTag}</strong> yet &middot; <a href="blog.html" class="rc-underline">clear filter</a>`;
+
+  // Highlight the matching tag pill(s) so it's clear which filter is active
+  document.querySelectorAll('.tag').forEach(tagEl => {
+    const slug = tagEl.textContent.trim().replace(/^#/, '');
+    tagEl.classList.toggle('tag-active', slug === activeTag);
   });
 }
 
@@ -175,6 +212,7 @@ function init() {
   setupLogoHover();
   setupRainbowLinks();
   setupRandomPostLink();
+  setupTagFilter();
   highlightCurrentPage();
   handleContactForm();
 }
