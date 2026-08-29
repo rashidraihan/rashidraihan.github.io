@@ -1,5 +1,5 @@
 // === CACHE BUSTING AND VERSION CONTROL ===
-const SITE_VERSION = '5.7';
+const SITE_VERSION = '5.8';
 
 if (localStorage.getItem('siteVersion') !== SITE_VERSION) {
   console.log('New version detected:', SITE_VERSION);
@@ -178,18 +178,35 @@ function setupTagFilter() {
 // On touch devices, tapping a tag normally navigates before the ring
 // animation is even visible (the page unloads too fast). Delay the
 // actual navigation just long enough for the reveal to play out.
+// Anchor-only links (like the year tags) don't unload the page, so
+// they're handled separately below instead.
 function setupMobileTagDelay() {
   const isTouch = window.matchMedia('(hover: none)').matches;
   if (!isTouch) return;
 
   document.querySelectorAll('.tag[href]').forEach(tag => {
+    const href = tag.getAttribute('href');
+    if (href.startsWith('#')) return;
+
     tag.addEventListener('click', function(e) {
       if (this.dataset.tagDelayed) return; // second tap: let it through
       e.preventDefault();
-      const href = this.getAttribute('href');
       this.classList.add('tag-tap');
       this.dataset.tagDelayed = 'true';
       setTimeout(() => { window.location.href = href; }, 600);
+    });
+  });
+}
+
+// Year tags (#year-2026, #year-2025, ...) never unload the page, so
+// only one should ever look "active" at a time — clicking one clears
+// the ring from every other year tag first.
+function setupYearTags() {
+  const yearTags = document.querySelectorAll('.year-row .tag');
+  yearTags.forEach(tag => {
+    tag.addEventListener('click', () => {
+      yearTags.forEach(t => t.classList.remove('tag-tap'));
+      tag.classList.add('tag-tap');
     });
   });
 }
@@ -251,13 +268,13 @@ function handleContactForm() {
 
 // === INITIALIZATION ===
 function init() {
-  createStars();
   setupNavGlitch();
   setupRainbowLinks();
   setupRandomPostLink();
   setupTagFilter();
   setupTagSpin();
   setupMobileTagDelay();
+  setupYearTags();
   highlightCurrentPage();
   handleContactForm();
 }

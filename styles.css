@@ -1,7 +1,7 @@
 :root {
-  --dark-bg: #0a0a14;
-  --dark-text: #e0e0e0;
-  --card-dark: #151522;
+  --dark-bg: #262624;
+  --dark-text: #e5e3df;
+  --card-dark: #30302e;
   --line: #ffffff;
 }
 
@@ -54,16 +54,11 @@ body {
   display: inline-block;
   white-space: nowrap;
   cursor: default;
-  background: linear-gradient(90deg, #4a9eff, #ff5c5c, #ff6ec7, #4ade80, #ff9a3d, #b388ff, #4a9eff);
-  background-size: 300% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: rainbowFlow 7s linear infinite;
+  color: #e5e3df;
 }
 
 .hero-subtitle {
-  color: #999;
+  color: #a8a29e;
   font-size: 1.3rem;
   margin-top: 0.4rem;
 }
@@ -197,7 +192,7 @@ main {
 }
 
 .page-subtitle {
-  color: #999;
+  color: #a8a29e;
   margin-bottom: 1.75rem;
 }
 
@@ -428,35 +423,23 @@ main {
   margin: 0 0.6rem;
 }
 
-/* Footer — same continuous flowing rainbow gradient as the logo */
+/* Footer — plain, static, icon stacked above the copyright line */
 footer {
   padding: 3rem 0 2rem;
   text-align: center;
 }
 
-.footer-github,
-footer p {
-  display: inline-block;
-  background: linear-gradient(90deg, #4a9eff, #ff5c5c, #ff6ec7, #4ade80, #ff9a3d, #b388ff, #4a9eff);
-  background-size: 300% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: rainbowFlow 7s linear infinite;
-}
-
 .footer-github {
+  display: inline-block;
   font-size: 1.4rem;
   margin-bottom: 1rem;
   text-decoration: none;
+  color: #e5e3df;
 }
 
 footer p {
   font-size: 0.9rem;
-}
-
-@keyframes rainbowFlow {
-  to { background-position: 300% center; }
+  color: #a8a29e;
 }
 
 /* Space background */
