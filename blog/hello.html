@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Why I stopped trusting accuracy alone — Raihan Rashid</title>
+  <title>Hello — Raihan Rashid</title>
 
   <link rel="preload" href="../styles.css?v=5.7" as="style">
   <link rel="preload" href="../script.js?v=5.7" as="script">
@@ -51,36 +51,22 @@
 
     <main>
       <article class="post">
-        <h1 class="post-title">Why I stopped trusting accuracy alone</h1>
-        <p class="post-date">Aug 20, 2026</p>
+        <h1 class="post-title">Hello</h1>
+        <p class="post-date">Nov 21, 2025</p>
         <div class="post-tags">
-          <a href="../blog.html?tag=machine-learning" class="tag">#machine-learning</a>
-          <a href="../blog.html?tag=healthcare" class="tag">#healthcare</a>
+          <a href="../blog.html?tag=misc" class="tag">#misc</a>
         </div>
 
         <hr class="post-divider">
 
-        <p>This project started with a number that looked great and turned out to mean almost nothing. I was building a stroke-risk prediction model, running a batch of classifiers over the same medical dataset — Logistic Regression, Random Forest, AdaBoost, GaussianNB, LightGBM, XGBoost, a couple of voting ensembles — and one of them came back over 90% accurate. My first reaction was relief. My second, a few minutes later, was suspicion.</p>
-
-        <p>The dataset is heavily imbalanced — most people in it didn't have a stroke. So a model can hit 90%+ accuracy by mostly just predicting "no stroke" and coasting on the fact that it's usually right by default. That's not a working model, that's a model that's found a shortcut, and in healthcare a shortcut like that is actively dangerous — it's confidently wrong exactly where being wrong costs the most.</p>
-
-        <p>So I stopped looking at accuracy as the headline number and started looking at everything alongside it: F1, precision, recall, ROC-AUC, PR-AUC, across every model I'd trained.</p>
-
-        <img src="../images/projects/stroke-prediction.png" alt="Model accuracy comparison chart for the stroke prediction framework" class="post-image">
-        <p class="post-image-caption">Accuracy across every model tested — the chart that made me distrust the leaderboard.</p>
-
-        <p>Once I lined all the metrics up side by side, the picture changed completely. Models that looked nearly identical on accuracy were wildly different on recall — some were catching real risk cases, others were quietly missing most of them while still scoring well on paper. The whole point of a hybrid explainable framework, which is what this project became, is that it doesn't let a single flattering metric hide what a model is actually doing. It has to show its reasoning, not just its score.</p>
-
-        <p>The bigger lesson traveled with me past this one project: whenever a result looks a little too clean, that's exactly when it deserves the closest look, not the least.</p>
+        <p>Hey!! 🤖</p>
 
         <hr class="post-divider">
 
         <nav class="post-nav">
-          <a href="deepsurf.html" class="rc-underline">&larr; Newer</a>
+          <a href="turtle-shell.html" class="rc-underline">&larr; Newer</a>
           <span class="sep">&middot;</span>
           <a href="#" data-random-post class="rc-underline">Random</a>
-          <span class="sep">&middot;</span>
-          <a href="turtle-shell.html" class="rc-underline">Older &rarr;</a>
         </nav>
 
         <div class="pre-footer-tags">
@@ -91,6 +77,7 @@
             <a href="../blog.html?tag=healthcare" class="tag">#healthcare</a>
             <a href="../blog.html?tag=python" class="tag">#python</a>
             <a href="../blog.html?tag=systems" class="tag">#systems</a>
+            <a href="../blog.html?tag=misc" class="tag">#misc</a>
           </div>
         </div>
       </article>

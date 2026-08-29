@@ -1,5 +1,5 @@
 // === CACHE BUSTING AND VERSION CONTROL ===
-const SITE_VERSION = '5.5';
+const SITE_VERSION = '5.7';
 
 if (localStorage.getItem('siteVersion') !== SITE_VERSION) {
   console.log('New version detected:', SITE_VERSION);
@@ -32,7 +32,8 @@ const CONFIG = {
   posts: [
     'blog/deepsurf.html',
     'blog/stroke-prediction.html',
-    'blog/turtle-shell.html'
+    'blog/turtle-shell.html',
+    'blog/hello.html'
   ]
 };
 
@@ -104,15 +105,6 @@ function setupNavGlitch() {
   });
 }
 
-// Logo/brand text changes color on hover — same effect on every page's brand text.
-function setupLogoHover() {
-  document.querySelectorAll('.logo-wordmark').forEach(logo => {
-    logo.addEventListener('mouseenter', () => {
-      logo.style.setProperty('--logo-color', randomColor());
-    });
-  });
-}
-
 // Content links and post titles continuously cycle through the
 // palette, and jump to a fresh color on hover. Tags have their own
 // separate hover-only glow effect defined in CSS.
@@ -141,28 +133,34 @@ function setupRandomPostLink() {
 }
 
 // === TAG FILTERING (blog.html only) ===
-// Reads ?tag=slug from the URL and shows only matching posts.
+// Reads ?tag=slug from the URL and shows only matching posts,
+// hiding any year section left with nothing in it.
 function setupTagFilter() {
-  const postList = document.getElementById('postList');
   const filterStatus = document.getElementById('filterStatus');
-  if (!postList || !filterStatus) return;
+  const yearBlocks = document.querySelectorAll('.year-block');
+  if (!filterStatus || yearBlocks.length === 0) return;
 
   const params = new URLSearchParams(window.location.search);
   const activeTag = params.get('tag');
-  const items = postList.querySelectorAll('.post-item');
 
   if (!activeTag) {
-    items.forEach(item => { item.style.display = ''; });
+    document.querySelectorAll('.post-item').forEach(item => { item.style.display = ''; });
+    yearBlocks.forEach(block => { block.style.display = ''; });
     filterStatus.style.display = 'none';
     return;
   }
 
   let matchCount = 0;
-  items.forEach(item => {
-    const tags = (item.dataset.tags || '').split(' ');
-    const matches = tags.includes(activeTag);
-    item.style.display = matches ? '' : 'none';
-    if (matches) matchCount++;
+  yearBlocks.forEach(block => {
+    const items = block.querySelectorAll('.post-item');
+    let blockHasMatch = false;
+    items.forEach(item => {
+      const tags = (item.dataset.tags || '').split(' ');
+      const matches = tags.includes(activeTag);
+      item.style.display = matches ? '' : 'none';
+      if (matches) { matchCount++; blockHasMatch = true; }
+    });
+    block.style.display = blockHasMatch ? '' : 'none';
   });
 
   filterStatus.style.display = 'block';
@@ -174,6 +172,52 @@ function setupTagFilter() {
   document.querySelectorAll('.tag').forEach(tagEl => {
     const slug = tagEl.textContent.trim().replace(/^#/, '');
     tagEl.classList.toggle('tag-active', slug === activeTag);
+  });
+}
+
+// On touch devices, tapping a tag normally navigates before the ring
+// animation is even visible (the page unloads too fast). Delay the
+// actual navigation just long enough for the reveal to play out.
+function setupMobileTagDelay() {
+  const isTouch = window.matchMedia('(hover: none)').matches;
+  if (!isTouch) return;
+
+  document.querySelectorAll('.tag[href]').forEach(tag => {
+    tag.addEventListener('click', function(e) {
+      if (this.dataset.tagDelayed) return; // second tap: let it through
+      e.preventDefault();
+      const href = this.getAttribute('href');
+      this.classList.add('tag-tap');
+      this.dataset.tagDelayed = 'true';
+      setTimeout(() => { window.location.href = href; }, 600);
+    });
+  });
+}
+
+// Tag ring: on hover, its rainbow colors continuously rotate,
+// starting from a random point each time you hover.
+function setupTagSpin() {
+  document.querySelectorAll('.tag').forEach(tag => {
+    let angle = Math.random() * 360;
+    let raf = null;
+
+    const step = () => {
+      angle = (angle + 1.2) % 360;
+      tag.style.setProperty('--hue-rotate', angle + 'deg');
+      raf = requestAnimationFrame(step);
+    };
+
+    tag.addEventListener('mouseenter', () => {
+      angle = Math.random() * 360;
+      tag.style.setProperty('--hue-rotate', angle + 'deg');
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(step);
+    });
+
+    tag.addEventListener('mouseleave', () => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = null;
+    });
   });
 }
 
@@ -209,10 +253,11 @@ function handleContactForm() {
 function init() {
   createStars();
   setupNavGlitch();
-  setupLogoHover();
   setupRainbowLinks();
   setupRandomPostLink();
   setupTagFilter();
+  setupTagSpin();
+  setupMobileTagDelay();
   highlightCurrentPage();
   handleContactForm();
 }

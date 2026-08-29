@@ -39,48 +39,49 @@ body {
   padding: 0 1.5rem;
 }
 
-/* Header — sticky, blurred, low-opacity, stays fixed in shape while scrolling */
-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 1.25rem 1.5rem;
-  background-color: rgba(10, 10, 20, 0.35);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+/* Hero — brand name + subtitle, scrolls normally with the page,
+   never sticky, never moves with the nav bar. Sits slightly right
+   and lower on desktop (not on mobile — see responsive section). */
+.hero {
+  padding: 4rem 1.5rem 1.5rem 2.5rem;
   margin: 0 -1.5rem;
 }
 
-.header-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
 .logo-wordmark {
-  --logo-color: #e0e0e0;
-  font-family: 'Orbitron', -apple-system, sans-serif;
-  font-size: 1.35rem;
+  font-family: 'Space Grotesk', -apple-system, sans-serif;
+  font-size: 2rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--logo-color);
-  transition: color 0.25s ease;
   display: inline-block;
+  white-space: nowrap;
   cursor: default;
+  background: linear-gradient(90deg, #4a9eff, #ff5c5c, #ff6ec7, #4ade80, #ff9a3d, #b388ff, #4a9eff);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rainbowFlow 7s linear infinite;
 }
 
-.header-right {
+.hero-subtitle {
+  color: #999;
+  font-size: 1.3rem;
+  margin-top: 0.4rem;
+}
+
+/* Nav bar — sticky, low-opacity tint (no blur) so content behind it
+   stays fully readable while scrolling, just slightly faded */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 0.85rem 1.5rem;
+  margin: 0 -1.5rem 0.5rem;
+  background-color: rgba(10, 10, 20, 0.45);
+}
+
+.nav-inner {
   display: flex;
-  align-items: center;
+  justify-content: center;
 }
 
 /* Navigation — plain text, monospace, no icons */
@@ -156,11 +157,13 @@ main {
 
 .intro {
   margin-bottom: 3rem;
-  font-size: 1.05rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 1.1rem;
+  line-height: 1.75;
 }
 
 .intro p {
-  margin-bottom: 1rem;
+  margin-bottom: 1.1rem;
 }
 
 /* Homepage post teaser */
@@ -199,7 +202,9 @@ main {
 }
 
 /* Tags — plain text; hovering draws a colored ring clockwise around
-   the tag, like YouTube's animated subscribe-button glow */
+   the tag, like YouTube's animated subscribe-button glow. The ring's
+   colors continuously rotate while hovered, starting from a random
+   point each time (driven by --hue-rotate, set via JS). */
 @property --tag-angle {
   syntax: '<angle>';
   inherits: false;
@@ -208,6 +213,7 @@ main {
 
 .tag {
   --tag-angle: 0deg;
+  --hue-rotate: 0deg;
   position: relative;
   display: inline-block;
   line-height: 1;
@@ -230,11 +236,12 @@ main {
   content: '';
   position: absolute;
   inset: 0;
+  z-index: -1;
   border-radius: 999px;
   border: 2px solid transparent;
   background-image:
     linear-gradient(var(--dark-bg), var(--dark-bg)),
-    conic-gradient(from 0deg, #4a9eff 0deg, #ff5c5c 60deg, #ff6ec7 120deg, #4ade80 180deg, #ff9a3d 240deg, #b388ff 300deg, #4a9eff 360deg);
+    conic-gradient(from var(--hue-rotate), #4a9eff 0deg, #ff5c5c 60deg, #ff6ec7 120deg, #4ade80 180deg, #ff9a3d 240deg, #b388ff 300deg, #4a9eff 360deg);
   background-origin: border-box;
   background-clip: content-box, border-box;
   -webkit-mask-image: conic-gradient(#000 calc(var(--tag-angle)), transparent 0deg);
@@ -243,7 +250,8 @@ main {
   transition: --tag-angle 0.6s ease;
 }
 
-.tag:hover:before {
+.tag:hover:before,
+.tag.tag-tap:before {
   --tag-angle: 360deg;
 }
 
@@ -379,7 +387,10 @@ main {
 }
 
 .post p {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.3rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 1.05rem;
+  line-height: 1.75;
 }
 
 .post code {
@@ -417,23 +428,35 @@ main {
   margin: 0 0.6rem;
 }
 
-/* Footer — plain, no color cycling */
+/* Footer — same continuous flowing rainbow gradient as the logo */
 footer {
   padding: 3rem 0 2rem;
   text-align: center;
 }
 
+.footer-github,
+footer p {
+  display: inline-block;
+  background: linear-gradient(90deg, #4a9eff, #ff5c5c, #ff6ec7, #4ade80, #ff9a3d, #b388ff, #4a9eff);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rainbowFlow 7s linear infinite;
+}
+
 .footer-github {
   font-size: 1.4rem;
-  display: inline-block;
   margin-bottom: 1rem;
   text-decoration: none;
-  color: var(--dark-text);
 }
 
 footer p {
   font-size: 0.9rem;
-  color: #999;
+}
+
+@keyframes rainbowFlow {
+  to { background-position: 300% center; }
 }
 
 /* Space background */
@@ -472,23 +495,26 @@ footer p {
 
 /* Responsive */
 @media (max-width: 768px) {
-  header {
-    padding: 1rem 1.25rem;
+  .hero {
+    padding: 1.5rem 1.25rem 1.25rem;
+    margin: 0 -1.25rem;
   }
 
-  .header-content {
-    flex: 1;
-  }
-
-  .desktop-nav {
-    width: 100%;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 0.75rem;
+  .site-nav {
+    padding: 0.75rem 1.25rem;
+    margin: 0 -1.25rem 0.5rem;
   }
 
   .logo-wordmark {
-    font-size: 1.25rem;
+    font-size: 1.4rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .desktop-nav {
+    gap: 0.85rem;
   }
 
   .page-title {
@@ -501,5 +527,19 @@ footer p {
 
   .post-title {
     font-size: 1.6rem;
+  }
+
+  .intro {
+    font-size: 1rem;
+  }
+
+  .post p {
+    font-size: 0.98rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .logo-wordmark {
+    font-size: 1.15rem;
   }
 }

@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Blog — Raihan Rashid</title>
 
-  <link rel="preload" href="styles.css?v=5.5" as="style">
-  <link rel="preload" href="script.js?v=5.5" as="script">
+  <link rel="preload" href="styles.css?v=5.7" as="style">
+  <link rel="preload" href="script.js?v=5.7" as="script">
 
-  <link rel="stylesheet" href="styles.css?v=5.5">
+  <link rel="stylesheet" href="styles.css?v=5.7">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,31 +33,28 @@
   <div class="space-bg" id="spaceBg"></div>
 
   <div class="container">
-    <header>
-      <div class="header-inner">
-        <div class="header-content">
-          <div class="logo-wordmark">Raihan's Blog</div>
-        </div>
+    <div class="hero">
+      <div class="logo-wordmark">Raihan's Blog</div>
+      <p class="hero-subtitle">Build logs, and whatever else I figure out along the way</p>
+    </div>
 
-        <div class="header-right">
-          <nav class="desktop-nav">
-            <a href="index.html" class="nav-link" data-value="home">home</a>
-            <a href="blog.html" class="nav-link" data-value="blog">blog</a>
-            <a href="https://github.com/rashidraihan" target="_blank" class="nav-link" data-value="github">github</a>
-            <a href="socials.html" class="nav-link" data-value="socials">socials</a>
-          </nav>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <div class="desktop-nav">
+          <a href="index.html" class="nav-link" data-value="home">home</a>
+          <a href="blog.html" class="nav-link" data-value="blog">blog</a>
+          <a href="https://github.com/rashidraihan" target="_blank" class="nav-link" data-value="github">github</a>
+          <a href="socials.html" class="nav-link" data-value="socials">socials</a>
         </div>
       </div>
-    </header>
+    </nav>
 
     <main>
-      <h1 class="page-title">Blog</h1>
-      <p class="page-subtitle">Build logs, and whatever else I figure out along the way</p>
-
       <hr class="section-divider">
 
       <div class="year-row">
         <a href="#year-2026" class="tag">2026</a>
+        <a href="#year-2025" class="tag">2025</a>
       </div>
 
       <hr class="section-divider">
@@ -68,49 +65,68 @@
         <a href="blog.html?tag=healthcare" class="tag">#healthcare</a>
         <a href="blog.html?tag=python" class="tag">#python</a>
         <a href="blog.html?tag=systems" class="tag">#systems</a>
+        <a href="blog.html?tag=misc" class="tag">#misc</a>
       </div>
 
       <hr class="section-divider">
 
-      <h2 class="year-heading" id="year-2026">2026</h2>
-      <div id="filterStatus" class="filter-status" style="display:none;"></div>
-      <div class="post-list" id="postList">
-        <div class="post-item" data-tags="machine-learning security">
-          <a href="blog/deepsurf.html" class="post-item-link">
-            <h3 class="post-item-title rc-underline">Teaching a model to smell malware</h3>
-            <p class="post-item-date">Aug 26, 2026</p>
-            <p class="post-item-excerpt">Building DeepSurf — an ensemble model that classifies Android network traffic as benign or malicious, and the live demo I built around it.</p>
-          </a>
-          <div class="post-item-tags">
-            <a href="blog.html?tag=machine-learning" class="tag">#machine-learning</a>
-            <a href="blog.html?tag=security" class="tag">#security</a>
+      <section class="year-block" data-year="2026">
+        <h2 class="year-heading" id="year-2026">2026</h2>
+        <div id="filterStatus" class="filter-status" style="display:none;"></div>
+        <div class="post-list">
+          <div class="post-item" data-tags="machine-learning security">
+            <a href="blog/deepsurf.html" class="post-item-link">
+              <h3 class="post-item-title rc-underline">Teaching a model to smell malware</h3>
+              <p class="post-item-date">Aug 26, 2026</p>
+              <p class="post-item-excerpt">Building DeepSurf — an ensemble model that classifies Android network traffic as benign or malicious, and the live demo I built around it.</p>
+            </a>
+            <div class="post-item-tags">
+              <a href="blog.html?tag=machine-learning" class="tag">#machine-learning</a>
+              <a href="blog.html?tag=security" class="tag">#security</a>
+            </div>
           </div>
-        </div>
 
-        <div class="post-item" data-tags="machine-learning healthcare">
-          <a href="blog/stroke-prediction.html" class="post-item-link">
-            <h3 class="post-item-title rc-underline">Why I stopped trusting accuracy alone</h3>
-            <p class="post-item-date">Aug 20, 2026</p>
-            <p class="post-item-excerpt">An explainable framework for stroke-risk prediction, and the moment a 90%-accurate model turned out to be quietly useless.</p>
-          </a>
-          <div class="post-item-tags">
-            <a href="blog.html?tag=machine-learning" class="tag">#machine-learning</a>
-            <a href="blog.html?tag=healthcare" class="tag">#healthcare</a>
+          <div class="post-item" data-tags="machine-learning healthcare">
+            <a href="blog/stroke-prediction.html" class="post-item-link">
+              <h3 class="post-item-title rc-underline">Why I stopped trusting accuracy alone</h3>
+              <p class="post-item-date">Aug 20, 2026</p>
+              <p class="post-item-excerpt">An explainable framework for stroke-risk prediction, and the moment a 90%-accurate model turned out to be quietly useless.</p>
+            </a>
+            <div class="post-item-tags">
+              <a href="blog.html?tag=machine-learning" class="tag">#machine-learning</a>
+              <a href="blog.html?tag=healthcare" class="tag">#healthcare</a>
+            </div>
           </div>
         </div>
+      </section>
 
-        <div class="post-item" data-tags="python systems">
-          <a href="blog/turtle-shell.html" class="post-item-link">
-            <h3 class="post-item-title rc-underline">Writing a shell taught me what a shell actually does</h3>
-            <p class="post-item-date">Aug 15, 2026</p>
-            <p class="post-item-excerpt">Turtle Shell, a Unix-like shell I wrote in Python — and everything "handle errors gracefully" turned out to actually mean.</p>
-          </a>
-          <div class="post-item-tags">
-            <a href="blog.html?tag=python" class="tag">#python</a>
-            <a href="blog.html?tag=systems" class="tag">#systems</a>
+      <section class="year-block" data-year="2025">
+        <h2 class="year-heading" id="year-2025">2025</h2>
+        <div class="post-list">
+          <div class="post-item" data-tags="python systems">
+            <a href="blog/turtle-shell.html" class="post-item-link">
+              <h3 class="post-item-title rc-underline">Writing a shell taught me what a shell actually does</h3>
+              <p class="post-item-date">Dec 10, 2025</p>
+              <p class="post-item-excerpt">Turtle Shell, a Unix-like shell I wrote in Python — and everything "handle errors gracefully" turned out to actually mean.</p>
+            </a>
+            <div class="post-item-tags">
+              <a href="blog.html?tag=python" class="tag">#python</a>
+              <a href="blog.html?tag=systems" class="tag">#systems</a>
+            </div>
+          </div>
+
+          <div class="post-item" data-tags="misc">
+            <a href="blog/hello.html" class="post-item-link">
+              <h3 class="post-item-title rc-underline">Hello</h3>
+              <p class="post-item-date">Nov 21, 2025</p>
+              <p class="post-item-excerpt">Hey!! 🤖</p>
+            </a>
+            <div class="post-item-tags">
+              <a href="blog.html?tag=misc" class="tag">#misc</a>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </main>
   </div>
 
@@ -119,6 +135,6 @@
     <p>&copy; Raihan Rashid 2026</p>
   </footer>
 
-  <script src="script.js?v=5.5"></script>
+  <script src="script.js?v=5.7"></script>
 </body>
 </html>
