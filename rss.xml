@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="rss-style.xsl"?>
+<rss version="2.0">
+  <channel>
+    <title>Raihan Rashid's Blog</title>
+    <link>https://rashidraihan.github.io/blog.html</link>
+    <description>Build logs, and whatever else I figure out along the way.</description>
+    <language>en-us</language>
+
+    <item>
+      <title>Teaching a model to smell malware</title>
+      <link>https://rashidraihan.github.io/blog/deepsurf.html</link>
+      <guid>https://rashidraihan.github.io/blog/deepsurf.html</guid>
+      <pubDate>Wed, 26 Aug 2026 00:00:00 GMT</pubDate>
+      <description>Building DeepSurf, a model that tells whether Android traffic is safe or malicious, plus the live demo I built for it.</description>
+    </item>
+
+    <item>
+      <title>Why I stopped trusting accuracy alone</title>
+      <link>https://rashidraihan.github.io/blog/stroke-prediction.html</link>
+      <guid>https://rashidraihan.github.io/blog/stroke-prediction.html</guid>
+      <pubDate>Thu, 20 Aug 2026 00:00:00 GMT</pubDate>
+      <description>An explainable framework for stroke-risk prediction, and the moment a 90%-accurate model turned out to be quietly useless.</description>
+    </item>
+
+    <item>
+      <title>Writing a shell taught me what a shell actually does</title>
+      <link>https://rashidraihan.github.io/blog/turtle-shell.html</link>
+      <guid>https://rashidraihan.github.io/blog/turtle-shell.html</guid>
+      <pubDate>Wed, 10 Dec 2025 00:00:00 GMT</pubDate>
+      <description>Turtle Shell is a simple shell I wrote in Python, and everything "handle errors gracefully" turned out to actually mean.</description>
+    </item>
+
+    <item>
+      <title>Hello</title>
+      <link>https://rashidraihan.github.io/blog/hello.html</link>
+      <guid>https://rashidraihan.github.io/blog/hello.html</guid>
+      <pubDate>Fri, 21 Nov 2025 00:00:00 GMT</pubDate>
+      <description>Hey!! 🤖</description>
+    </item>
+  </channel>
+</rss>
