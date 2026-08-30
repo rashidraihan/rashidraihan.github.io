@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Teaching a model to smell malware — Raihan Rashid</title>
+  <title>Teaching a model to smell malware, Raihan Rashid</title>
 
-  <link rel="preload" href="../styles.css?v=5.9" as="style">
-  <link rel="preload" href="../script.js?v=5.9" as="script">
+  <link rel="preload" href="../styles.css?v=6.1" as="style">
+  <link rel="preload" href="../script.js?v=6.1" as="script">
 
-  <link rel="stylesheet" href="../styles.css?v=5.9">
+  <link rel="stylesheet" href="../styles.css?v=6.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,17 +19,17 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#262624">
 
-  <meta name="description" content="Building DeepSurf — an ensemble model that classifies Android network traffic as benign or malicious, and the live demo built around it.">
+  <meta name="description" content="Building DeepSurf, a model that tells whether Android traffic is safe or malicious, plus the live demo built around it.">
 
   <meta property="og:title" content="Teaching a model to smell malware">
-  <meta property="og:description" content="Building DeepSurf — an ensemble model that classifies Android network traffic as benign or malicious, and the live demo built around it.">
+  <meta property="og:description" content="Building DeepSurf, a model that tells whether Android traffic is safe or malicious, plus the live demo built around it.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://rashidraihan.github.io/blog/deepsurf.html">
   <meta property="og:image" content="https://rashidraihan.github.io/images/projects/deepsurf.png">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Teaching a model to smell malware">
-  <meta name="twitter:description" content="Building DeepSurf — an ensemble model that classifies Android network traffic as benign or malicious, and the live demo built around it.">
+  <meta name="twitter:description" content="Building DeepSurf, a model that tells whether Android traffic is safe or malicious, plus the live demo built around it.">
   <meta name="twitter:image" content="https://rashidraihan.github.io/images/projects/deepsurf.png">
 
   <meta name="format-detection" content="telephone=no">
@@ -73,16 +73,22 @@
 
         <hr class="post-divider">
 
-        <p>Here's the question that started DeepSurf: can you tell whether an Android app is malicious just by watching how its network traffic behaves, without ever opening the code? I didn't know the answer going in. Turns out — mostly, yes, but getting there taught me more about evaluation than about malware.</p>
+        <p>Here's the question that started DeepSurf: can you tell whether an Android app is malicious just by watching how its network traffic behaves, without ever opening the code? I didn't know the answer going in. It turns out mostly yes, but getting there taught me more about evaluation than about malware.</p>
 
-        <p>I trained an ensemble across a wide spread of models — Logistic Regression, Decision Tree, Random Forest, Gradient Boosting, AdaBoost, GaussianNB, LightGBM, XGBoost, SVM, KNN, and both soft and hard voting ensembles — on real traffic-flow data. The spread in results was bigger than I expected going in. Some models that looked perfectly fine on accuracy quietly fell apart on recall, which matters more here than almost any other metric, because a missed piece of malware is a lot more expensive than a false alarm.</p>
+        <h2>The models</h2>
 
-        <p>The project ended up published at IEMTRONICS 2025 (Springer), which was a genuinely nice surprise. But the part I actually enjoyed building was the demo. A notebook full of metrics doesn't convince anyone of anything — so I built a small interactive tool where you feed it a real traffic sample and watch it classify Benign vs. Malware live, confidence score included.</p>
+        <p>I trained an ensemble across a wide spread of models, including Logistic Regression, Decision Tree, Random Forest, Gradient Boosting, AdaBoost, GaussianNB, LightGBM, XGBoost, SVM, KNN, and both soft and hard voting ensembles, on real traffic flow data. The full code and dataset setup are on <a href="https://github.com/rashidraihan/DeepSurf-AI-powered-Android-Malware-Detection" target="_blank" class="rc-underline">GitHub</a>. The spread in results was bigger than I expected going in. Some models that looked perfectly fine on accuracy quietly fell apart on recall, which matters more here than almost any other metric, because missing a piece of malware costs a lot more than a false alarm.</p>
+
+        <h2>Getting published</h2>
+
+        <p>The project ended up published at IEMTRONICS 2025 <a href="https://link.springer.com/chapter/10.1007/978-981-95-0429-9_17" target="_blank" class="rc-underline">(Springer)</a>, which was a genuinely nice surprise. But the part I actually enjoyed building was the demo. A notebook full of metrics doesn't convince anyone of anything, so I built a small interactive tool where you feed it a real traffic sample and watch it classify Benign vs. Malware live, confidence score included.</p>
 
         <img src="../images/projects/deepsurf.png" alt="DeepSurf live demo detecting Android malware and benign traffic" class="post-image">
-        <p class="post-image-caption">Same model, two different traffic samples — one flagged Malware at 97.9% confidence, the other Benign at 74.3%.</p>
+        <p class="post-image-caption">Same model, two different traffic samples. One flagged Malware at 97.9% confidence, the other Benign at 74.3%.</p>
 
-        <p>That confidence gap between the two samples is the interesting bit. High-confidence correct calls are easy to be happy about. It's the lower-confidence ones — the model saying "benign, but only 74% sure" — that tell you where the actual decision boundary is fuzzy, and where I'd focus next if I kept pushing this further.</p>
+        <h2>What the confidence gap tells you</h2>
+
+        <p>That confidence gap between the two samples is the interesting bit. High-confidence correct calls are easy to be happy about. It's the lower-confidence ones, the model saying "benign, but only 74% sure," that show where the real decision boundary is fuzzy, and where I'd focus next if I kept pushing this further.</p>
 
         <hr class="post-divider">
 
@@ -111,6 +117,6 @@
     <p>&copy; Raihan Rashid 2026</p>
   </footer>
 
-  <script src="../script.js?v=5.9"></script>
+  <script src="../script.js?v=6.1"></script>
 </body>
 </html>

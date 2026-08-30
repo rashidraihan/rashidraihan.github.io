@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Writing a shell taught me what a shell actually does — Raihan Rashid</title>
+  <title>Writing a shell taught me what a shell actually does, Raihan Rashid</title>
 
-  <link rel="preload" href="../styles.css?v=5.9" as="style">
-  <link rel="preload" href="../script.js?v=5.9" as="script">
+  <link rel="preload" href="../styles.css?v=6.1" as="style">
+  <link rel="preload" href="../script.js?v=6.1" as="script">
 
-  <link rel="stylesheet" href="../styles.css?v=5.9">
+  <link rel="stylesheet" href="../styles.css?v=6.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,17 +19,17 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#262624">
 
-  <meta name="description" content="Turtle Shell, a Unix-like shell written in Python from scratch — and everything "handle errors gracefully" turned out to actually mean.">
+  <meta name="description" content="Turtle Shell, a simple shell written in Python from scratch, and everything "handle errors gracefully" turned out to actually mean.">
 
   <meta property="og:title" content="Writing a shell taught me what a shell actually does">
-  <meta property="og:description" content="Turtle Shell, a Unix-like shell written in Python from scratch — and everything "handle errors gracefully" turned out to actually mean.">
+  <meta property="og:description" content="Turtle Shell, a simple shell written in Python from scratch, and everything "handle errors gracefully" turned out to actually mean.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://rashidraihan.github.io/blog/turtle-shell.html">
   <meta property="og:image" content="https://rashidraihan.github.io/images/projects/turtle-shell.png">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Writing a shell taught me what a shell actually does">
-  <meta name="twitter:description" content="Turtle Shell, a Unix-like shell written in Python from scratch — and everything "handle errors gracefully" turned out to actually mean.">
+  <meta name="twitter:description" content="Turtle Shell, a simple shell written in Python from scratch, and everything "handle errors gracefully" turned out to actually mean.">
   <meta name="twitter:image" content="https://rashidraihan.github.io/images/projects/turtle-shell.png">
 
   <meta name="format-detection" content="telephone=no">
@@ -73,16 +73,22 @@
 
         <hr class="post-divider">
 
-        <p>I've typed into a terminal every day for years without ever really asking what happens between hitting Enter and getting an answer back. Turtle Shell started as an attempt to close that gap — a Unix-like shell, written in Python, with command history, navigation, and error handling, built from nothing but the standard library and a lot of trial and error.</p>
+        <p>I've typed into a terminal every day for years without ever really asking what happens between hitting Enter and getting an answer back. Turtle Shell started as an attempt to close that gap. It's a simple shell, written in Python, with command history, navigation, and error handling, built from nothing but the standard library and a lot of trial and error. The full source is up on <a href="https://github.com/rashidraihan/Turtle-Shell" target="_blank" class="rc-underline">GitHub</a>.</p>
 
-        <p>The commands themselves — mapping a directory, listing files, tracking a history log — were the easy part. What actually ate my time was error handling, and specifically how much I'd underestimated it. "Handle errors gracefully" sounds like a checkbox until you're the one deciding what should happen when someone asks for a file that doesn't exist, or types a command that's almost right but not quite, or feeds the shell an empty string. Every one of those is a small design decision, and a real shell makes hundreds of them without you ever noticing.</p>
+        <h2>Where the time actually went</h2>
+
+        <p>The commands themselves, like mapping a directory, listing files, and tracking a history log, were the easy part. What actually ate my time was error handling, and specifically how much I'd underestimated it. "Handle errors gracefully" sounds like a checkbox until you're the one deciding what should happen when someone asks for a file that doesn't exist, or types a command that's almost right but not quite, or feeds the shell an empty string. Every one of those is a small design decision, and a real shell makes hundreds of them without you ever noticing.</p>
 
         <img src="../images/projects/turtle-shell.png" alt="Turtle Shell terminal session showing commands in use" class="post-image">
-        <p class="post-image-caption">A real session — mapping a directory, checking inventory, logging today's date, and reviewing command history.</p>
+        <p class="post-image-caption">A real session, mapping a directory, checking inventory, logging today's date, and reviewing command history.</p>
 
-        <p>That screenshot is an actual session, not a staged demo — <code>map</code> to locate the working directory, <code>inventory</code> to list what's in it, <code>today</code> to check and set the date, <code>record</code> to pull up the command history. Small utilities, but each one forced me to think about state: what the shell remembers between commands, what it forgets, and what it should never silently get wrong.</p>
+        <h2>A real session, not a demo</h2>
 
-        <p>It's the smallest project of the three I've written about here, and probably the one I reach for the most, because it's not a demo — it's a tool I actually use. That's a different kind of finished than "the model hit its target metric."</p>
+        <p>That screenshot is an actual session, not a staged demo. <code>map</code> locates the working directory, <code>inventory</code> lists what's in it, <code>today</code> checks and sets the date, and <code>record</code> pulls up the command history. Small utilities, but each one forced me to think about state: what the shell remembers between commands, what it forgets, and what it should never silently get wrong.</p>
+
+        <h2>Why this one stuck around</h2>
+
+        <p>It's the smallest project of the three I've written about here, and probably the one I reach for the most, because it's not a demo. It's a tool I actually use. That's a different kind of finished than "the model hit its target metric."</p>
 
         <hr class="post-divider">
 
@@ -113,6 +119,6 @@
     <p>&copy; Raihan Rashid 2026</p>
   </footer>
 
-  <script src="../script.js?v=5.9"></script>
+  <script src="../script.js?v=6.1"></script>
 </body>
 </html>

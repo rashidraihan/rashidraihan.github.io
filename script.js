@@ -1,5 +1,5 @@
 // === CACHE BUSTING AND VERSION CONTROL ===
-const SITE_VERSION = '5.9';
+const SITE_VERSION = '6.1';
 
 if (localStorage.getItem('siteVersion') !== SITE_VERSION) {
   console.log('New version detected:', SITE_VERSION);
