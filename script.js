@@ -1,5 +1,5 @@
 // === CACHE BUSTING AND VERSION CONTROL ===
-const SITE_VERSION = '5.8';
+const SITE_VERSION = '5.9';
 
 if (localStorage.getItem('siteVersion') !== SITE_VERSION) {
   console.log('New version detected:', SITE_VERSION);
@@ -101,6 +101,28 @@ function setupNavGlitch() {
     el.addEventListener("mouseout", () => {
       if (animationInterval) clearInterval(animationInterval);
       el.textContent = originalText;
+    });
+  });
+}
+
+// On touch devices, tapping a nav link normally navigates before the
+// glitch-scramble text effect is even visible. Delay the actual
+// navigation just long enough for it to finish playing.
+function setupMobileNavDelay() {
+  const isTouch = window.matchMedia('(hover: none)').matches;
+  if (!isTouch) return;
+
+  document.querySelectorAll('.nav-link[href]').forEach(link => {
+    if (link.target === '_blank') return; // opens in a new tab, no unload to race against
+
+    link.addEventListener('click', function(e) {
+      if (this.dataset.navDelayed) return; // second tap: let it through
+      e.preventDefault();
+      const href = this.getAttribute('href');
+      const text = this.dataset.value || this.textContent;
+      const duration = text.length * 2 * 30 + 120;
+      this.dataset.navDelayed = 'true';
+      setTimeout(() => { window.location.href = href; }, duration);
     });
   });
 }
@@ -269,6 +291,7 @@ function handleContactForm() {
 // === INITIALIZATION ===
 function init() {
   setupNavGlitch();
+  setupMobileNavDelay();
   setupRainbowLinks();
   setupRandomPostLink();
   setupTagFilter();
